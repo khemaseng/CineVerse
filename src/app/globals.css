@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Self-hosted Google Sans */
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+@theme {
+  --color-primary: #b90101;
+  --color-primary-dark: #8b0101;
+
+  --color-accent-gold: #ffd700;
+  --color-bg-light: #f6f7f9;
+
+  --text-light: #828282;
+  --text-black: rgba(255, 255, 255, 0.7);
+
+  --text-h1: 96px;
+  --text-h2: 44px;
+  --text-h3: 32px;
+  --text-h4: 20px;
+  --text-btn: 24px;
+
+  /* for card */
+  --card-detail-title: 48px;
+  --card-title: 28px;
+  --card-description: 18px;
+  --text-btn-card: 16px;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+}
+
+@layer base {
+  :root {
+    --primary-red: #b90101;
+    --accent-gold: #ffd700;
+    --bg-light: #f6f7f9;
+    --bg-pop-up-light-mode: rgba(39, 42, 48, 0.25); /*[#272A30]/25*/
+    --bg-pop-up-dark-mode: rgba(26, 31, 37, 0.4); /*[#1A1F25]/40*/
+
+    /* Glassmorphism - Light Mode */
+    --primary-color-5: rgba(39, 42, 48, 0.05);
+    --border-light-mode: rgba(39, 42, 48, 0.05); /*[#272A30]/5*/
+
+    /* Glassmorphism - dark  Mode */
+    --primary-color-30: rgba(39, 42, 48, 0.3);
+    --border-dark-mode: rgba(255, 255, 255, 0.2);
+
+    /* Figma Dark Mode Background: 2 layers (Front: Radial gradient, Behind: Pure black) */
+    --bg-dark-mode:
+      radial-gradient(
+        ellipse at 50% 50%,
+        rgba(109, 8, 8, 0.5) 0%,
+        #000000 100%
+      ),
+      #000000;
+
+    /* ======= Dark mode ======
+      For title's color: White (FFFFF)  or  --color-primary: #B90101;
+       for description's : [#FFFFFF]/70 or  --text-black: rgba(255, 255, 255, 0.7);
+    */
+
+    /* ======= Light mode ======
+      For title's color: black (00000)  or  --color-primary: #B90101;
+       for description's : [#828282]  or   --text-light: #828282;
+    */
+  }
+
+  html {
+    font-size: 18px;
+  }
+
+  body {
+    background-color: #f6f7f9;
+    color: #171717;
+    font-family:
+      "Google Sans",
+      "Product Sans",
+      "Open Sans",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  html.dark body {
+    background: var(--bg-dark-mode);
+    background-attachment: fixed;
+    color: #ffffff;
+  }
+
+  *,
+  *::before,
+  *::after {
+    font-family:
+      "Google Sans",
+      "Product Sans",
+      "Open Sans",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+  }
+}
+
+/* Glassmorphism - Light Mode */
+.glass {
+  background: var(--primary-color-5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 2px solid #dde1e7;
+
+  border: 2px solid #dde1e7;
+
+  box-shadow: 0 8px 32px rgba(39, 42, 48, 0.08);
+}
+
+/* Custom Utilities for Project Colors & Theme */
+.bg-primary-red {
+  background-color: #b90101 !important;
+}
+
+.text-primary-red {
+  color: #b90101 !important;
+}
+
+.border-primary-red {
+  border-color: #b90101 !important;
+}
+
+.text-accent-gold {
+  color: #ffd700 !important;
+}
+
+.text-dark {
+  color: #ffffff !important;
+}
+
+.bg-accent-gold {
+  background-color: #ffd700 !important;
+}
+
+.fill-accent-gold {
+  fill: #ffd700 !important;
+}
+
+.bg-light-theme {
+  background-color: #f6f7f9 !important;
+}
+
+.bg-dark-mode {
+  background: var(--bg-dark-mode) !important;
+  background-attachment: fixed;
+}
+
+.bg-cinema-radial {
+  background: var(--bg-dark-mode);
+}
+
+/* Hide scrollbars globally (scrolling stays functional, bar is invisible) */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Legacy Edge / IE */
+}
+
+/* Hide scrollbars while preserving scrolling functionality */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
