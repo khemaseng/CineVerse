@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShoppingBag, TableProperties } from "lucide-react";
-import ProductCardListComponent from "@/components/products/ProductCardListComponent";
+
 interface Props {
   params: Promise<{ productName: string }>;
 }
@@ -53,17 +53,6 @@ export default async function Home({ params }: Props) {
             View Data Table
           </Link>
         </div>
-      </section>
-
-      {/* Featured Products Section */}
-      <section className="mt-8 border-t border-border pt-12">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-2 mb-4">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Featured Products</h2>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Click on any product to view its complete specifications, ratings, and gallery.
-          </p>
-        </div>
-       <ProductCardListComponent productName={decodedName} />
       </section>
     </div>
   );
