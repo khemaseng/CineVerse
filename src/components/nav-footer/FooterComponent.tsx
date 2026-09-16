@@ -1,91 +1,84 @@
 
-import Link from "next/link"
+"use client";
+
+import Link from "next/link";
+import { Film, Globe, Share2, MessageSquare } from "lucide-react";
+
+const FOOTER_LINKS = [
+  {
+    title: "Explore",
+    links: [
+      { href: "/movies", label: "Movies" },
+      { href: "/genre", label: "Genre" },
+      { href: "/trending", label: "Trending" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/about", label: "About Us" },
+      { href: "/auth/login", label: "Log In" },
+      { href: "/auth/register", label: "Sign Up" },
+    ],
+  },
+];
 
 export function FooterComponent() {
   return (
-    <footer className="border-t border-border bg-muted/30 pt-12 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-          {/* Brand & Description */}
-          <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl tracking-tight">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-black text-sm">
-                <img className="rounded-lg" src="/tos-tinh.jpg" alt="" />
+    <footer className="border-t border-border bg-background transition-colors duration-200">
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div>
+            <Link href="/" className="flex items-center gap-2">
+              <Film className="text-red-600" size={26} />
+              <span className="text-lg font-bold text-foreground">
+                Cine<span className="text-red-600">Verse</span>
               </span>
-              <span>Tos Tinh</span>
             </Link>
-            <p className="text-sm text-muted-foreground max-w-sm">
-              Your one-stop destination for quality products with seamless shopping, verified customer ratings, and responsive customer care.
+            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
+              Discover, explore, and track the movies you love — powered by TMDB.
             </p>
+            <div className="mt-4 flex gap-4 text-muted-foreground">
+              <Globe
+                size={18}
+                className="cursor-pointer transition-colors hover:text-red-600 dark:hover:text-amber-400"
+              />
+              <Share2
+                size={18}
+                className="cursor-pointer transition-colors hover:text-red-600 dark:hover:text-amber-400"
+              />
+              <MessageSquare
+                size={18}
+                className="cursor-pointer transition-colors hover:text-red-600 dark:hover:text-amber-400"
+              />
+            </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold tracking-wider uppercase text-foreground">
-              Navigation
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/" className="hover:text-foreground transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/product" className="hover:text-foreground transition-colors">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/data-tables" className="hover:text-foreground transition-colors">
-                  Data Table
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="hover:text-foreground transition-colors">
-                  Categories
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Customer Care & Contact */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold tracking-wider uppercase text-foreground">
-              Account & Support
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/auth/login" className="hover:text-foreground transition-colors">
-                  Sign In
-                </Link>
-              </li>
-              <li>
-                <Link href="/auth/register" className="hover:text-foreground transition-colors">
-                  Register Account
-                </Link>
-              </li>
-              <li>
-                <span className="text-sm text-muted-foreground">
-                  Email: support@tostinh.com
-                </span>
-              </li>
-            </ul>
-          </div>
+          {FOOTER_LINKS.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+                {section.title}
+              </h4>
+              <ul className="mt-4 space-y-2">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-red-600 dark:hover:text-amber-400"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom copyright & policies */}
-        <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© Copyright {new Date().getFullYear()} Tos Tinh. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-          </div>
+        <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+          © {new Date().getFullYear()} CineVerse. Movie data provided by TMDB. Not affiliated with TMDB.
         </div>
       </div>
     </footer>
-  )
+  );
 }
