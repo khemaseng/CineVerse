@@ -1,71 +1,45 @@
-import { Metadata } from "next";
-import { columns, Product } from "./columns"
-import { DataTable } from "./data-table"
 
-export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
-  title: {
-    template: '%s | Tos Tinh',
-    default: 'Data-Table'
-  },
-  keywords: "T-shirts for women",
-  description: "Tos Tinh is a modern platform and modern vibe for all costumers.",
-  openGraph: {
-    title: "Tos Tinh - M2",
-    description: "Tos Tinh refers to small retail and online lifestyle or fashion businesses in Phnom Penh, such as Tos Tinh 356 Store and Tos tinh-21, offering modern clothing and products through social media platforms.",
-    images: ['/thumbnail.png']
-  }
-};
-interface DummyProductItem {
-  id: number
-  title: string
-  price: number
-  description: string
-  category: string
-  thumbnail: string
-  rating: number
-}
+"use client";
 
-async function getData(): Promise<Product[]> {
-  try {
-    const res = await fetch("https://dummyjson.com/products?limit=100", {
-      cache: "no-store",
-      signal: AbortSignal.timeout(8000),
-    })
-    if (!res.ok) {
-      console.error(`Failed to fetch products: ${res.status} ${res.statusText}`)
-      return []
-    }
-    const data: { products: DummyProductItem[] } = await res.json()
-    return data.products.map((item) => ({
-      id: String(item.id),
-      image: item.thumbnail,
-      title: item.title,
-      price: item.price,
-      category: item.category,
-      rate: item.rating ?? 0,
-    }))
-  } catch (error) {
-    console.error("Error fetching data for table:", error)
-    return []
-  }
-}
-export default async function ProductDataTable() {
-  const data = await getData()
+import { useState } from "react";
+import useSWR from "swr";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
+import { DataTableFeatures } from "./data-table-features";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function DataTablesPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("popular");
+
+  // Fetch either search endpoint or selected category list using SWR
+  const apiEndpoint = searchQuery
+    ? `/api/movies?query=${encodeURIComponent(searchQuery)}`
+    : `/api/movies?category=${category}`;
+
+  const { data, error, isLoading } = useSWR(apiEndpoint, fetcher);
+  const movies = data?.results || [];
 
   return (
-    <div className="pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Product Data Table</h1>
-            <p className="text-muted-foreground text-sm">
-              Manage, view, and inspect all products with TanStack Table.
-            </p>
-          </div>
-        </div>
-        <DataTable columns={columns} data={data} />
+    <section className="mx-auto max-w-7xl px-6 py-10">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-foreground">Movie Management Table</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Search and filter movies live with SWR
+        </p>
       </div>
-    </div>
-  )
+
+      <DataTableFeatures
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        category={category}
+        setCategory={setCategory}
+      />
+
+      {error && <div className="text-red-500 py-4">Failed to fetch movie data.</div>}
+
+      <DataTable columns={columns} data={movies} isLoading={isLoading} />
+    </section>
+  );
 }
