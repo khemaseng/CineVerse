@@ -1,14 +1,10 @@
 "use client";
-
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-
 type Theme = "light" | "dark";
-
 interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
 }
-
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 const STORAGE_KEY = "cineverse-theme";
 
