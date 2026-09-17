@@ -1,15 +1,30 @@
+// import type { NextConfig } from "next";
+// import { hostname } from "os";
+
+// const nextConfig: NextConfig = {
+//   /* config options here */
+//   reactCompiler: true,
+// images: {
+//     remotePatterns: [
+//       {
+//         protocol: 'https',
+//         hostname: 'fakestoreapi.com',
+//         pathname: '/**',
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;
 import type { NextConfig } from "next";
-import { hostname } from "os";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
-images: {
+  images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'fakestoreapi.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "image.tmdb.org",
+        pathname: "/t/p/**",
       },
     ],
   },

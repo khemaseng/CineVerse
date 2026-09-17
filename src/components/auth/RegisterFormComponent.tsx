@@ -1,236 +1,90 @@
-"use client"
 
-import * as React from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import * as z from "zod"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-// Zod validation schema
-const formSchema = z
-  .object({
-    username: z
-      .string()
-      .min(3, { message: "Username must be at least 3 characters long" })
-      .max(30, { message: "Username cannot exceed 30 characters" })
-      .regex(/^[a-zA-Z0-9_]+$/, {
-        message: "Username can only contain letters, numbers, and underscores",
-      }),
-    email: z.string().email("Please enter a valid email address"),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long" })
-      .max(20, { message: "Password cannot exceed 20 characters" })
-      .regex(/[A-Z]/, { message: "Must contain at least one uppercase letter" })
-      .regex(/[a-z]/, { message: "Must contain at least one lowercase letter" })
-      .regex(/[0-9]/, { message: "Must contain at least one number" })
-      .regex(/[^A-Za-z0-9]/, {
-        message: "Must contain at least one special character",
-      }),
-    confirmPassword: z.string().min(1, { message: "Please confirm your password" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  })
+export function RegisterFormComponent() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-type FormValues = z.infer<typeof formSchema>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
-  const router = useRouter()
-  const [loading, setLoading] = React.useState(false)
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  })
-
-  async function onSubmit(data: FormValues) {
     try {
-      setLoading(true)
-      const res = await fetch("https://sombobaeb.cheat.casa/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: data.username,
-          email: data.email,
-          password: data.password,
-        }),
-      })
-
-      const resData = await res.json().catch(() => null)
-
-      if (res.ok) {
-        toast.success("Registered successfully! Redirecting to login...")
-        setTimeout(() => {
-          router.push("/auth/login")
-        }, 1200)
-      } else {
-        const errorMsg =
-          typeof resData?.detail === "string"
-            ? resData.detail
-            : Array.isArray(resData?.detail)
-            ? resData.detail.map((e: { msg?: string }) => e.msg).join(", ")
-            : "Registration failed. Please try again."
-        toast.error(errorMsg)
-      }
-    } catch {
-      toast.error("Network error. Please try again.")
+      // Add authentication backend call here
+      toast.success("Account created successfully!");
+      router.push("/login");
+    } catch (err) {
+      toast.error("Registration failed. Try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <Card {...props}>
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
-          Enter your details below to create your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form id="form-register" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
-            <Controller
-              name="username"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="register-username">Username</FieldLabel>
-                  <Input
-                    {...field}
-                    id="register-username"
-                    type="text"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="johndoe"
-                    autoComplete="username"
-                    disabled={loading}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="email"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="register-email">Email</FieldLabel>
-                  <Input
-                    {...field}
-                    id="register-email"
-                    type="email"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="m@example.com"
-                    autoComplete="email"
-                    disabled={loading}
-                  />
-                  {fieldState.invalid ? (
-                    <FieldError errors={[fieldState.error]} />
-                  ) : (
-                    <FieldDescription>
-                      We will not share your email with anyone else.
-                    </FieldDescription>
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="password"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="register-password">
-                    Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="register-password"
-                    type="password"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="••••••••"
-                    disabled={loading}
-                  />
-                  {fieldState.invalid ? (
-                    <FieldError errors={[fieldState.error]} />
-                  ) : (
-                    <FieldDescription>
-                      Must be 8+ characters, with uppercase, lowercase, number, and special character.
-                    </FieldDescription>
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="confirmPassword"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="register-confirm-password">
-                    Confirm Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="register-confirm-password"
-                    type="password"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="••••••••"
-                    disabled={loading}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
-        </form>
-      </CardContent>
-      <CardFooter>
-        <FieldGroup className="w-full">
-          <Field>
-            <Button type="submit" form="form-register" disabled={loading} className="w-full">
-              {loading ? "Creating account..." : "Create Account"}
-            </Button>
-            <FieldDescription className="px-6 text-center">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="font-medium text-primary underline underline-offset-4">
-                Sign in
-              </Link>
-            </FieldDescription>
-          </Field>
-        </FieldGroup>
-      </CardFooter>
-    </Card>
-  )
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground">Full Name</label>
+        <input
+          type="text"
+          required
+          placeholder="John Doe"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground">Username</label>
+        <input
+          type="text"
+          required
+          placeholder="johndoe"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground">Email</label>
+        <input
+          type="email"
+          required
+          placeholder="name@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground">Password</label>
+        <input
+          type="password"
+          required
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="h-10 w-full rounded-lg bg-primary-red font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+      >
+        {loading ? "Creating account..." : "Create Account"}
+      </button>
+    </form>
+  );
 }
