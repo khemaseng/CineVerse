@@ -71,7 +71,7 @@
 
 @layer base {
   :root {
-    --primary-red: #b90101;
+    --primary-red: #b90101; /* # FCAD38*/
     --accent-gold: #ffd700;
     --bg-light: #f6f7f9;
     --bg-pop-up-light-mode: rgba(39, 42, 48, 0.25); /*[#272A30]/25*/
@@ -94,15 +94,6 @@
       ),
       #000000;
 
-    /* ======= Dark mode ======
-      For title's color: White (FFFFF)  or  --color-primary: #B90101;
-       for description's : [#FFFFFF]/70 or  --text-black: rgba(255, 255, 255, 0.7);
-    */
-
-    /* ======= Light mode ======
-      For title's color: black (00000)  or  --color-primary: #B90101;
-       for description's : [#828282]  or   --text-light: #828282;
-    */
   }
 
   html {

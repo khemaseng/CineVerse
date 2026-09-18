@@ -1,15 +1,15 @@
 // app/product/page.tsx
 import { Metadata } from "next";
-import ProductCardListComponent from "@/components/products/ProductCardListComponent";
+import GenreListComponent from "@/components/genre/GenreListComponent";
 
-const res = await fetch("https://fakestoreapi.com/products", {
+const res = await fetch("https://api.themoviedb.org/3", {
   headers: {
     "User-Agent": "Mozilla/5.0 (compatible; MyApp/1.0)",
   },
   cache: "no-store",
 });
 export const metadata: Metadata = {
-  title: "Products", // This hooks cleanly into layout %s templates
+  title: "Movies", // This hooks cleanly into layout %s templates
   description: "Tos Tinh is a modern platform and modern vibe for all customers.",
 };
 
@@ -22,7 +22,7 @@ export default function ProductPage() {
           Explore our collection of top-rated items with competitive pricing and fast delivery.
         </p>
       </div>
-      <ProductCardListComponent />
+      <GenreListComponent />
     </div>
   );
 }

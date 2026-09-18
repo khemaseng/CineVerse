@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ProductDetail1 } from "@/components/products/ProductDetailComponent";
+// import { ProductDetail1 } from "@/components/products/ProductDetailComponent";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -65,7 +65,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <ArrowLeft className="h-4 w-4" />
           Back to all products
         </Link>
-        <ProductDetail1 id={slug} className="py-4" />
+        {/* <ProductDetail1 id={slug} className="py-4" /> */}
       </div>
     </div>
   );
