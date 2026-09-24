@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Genre", href: "/genre" },
   { label: "Trending", href: "/trending" },
   { label: "About Us", href: "/about" },
+  { label: "Explore Premium", href: "/explore-premium" },
 ];
 
 export function NavbarComponent() {
