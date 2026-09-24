@@ -134,6 +134,17 @@ export const getTrendingMovies = (
 export const getNowPlayingMovies = (): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>("/movie/now_playing");
 
+export const getMoviesByGenre = (
+  genreId: number
+): Promise<{ results: Movie[] }> =>
+  fetchTMDB<{ results: Movie[] }>("/discover/movie", {
+    with_genres: String(genreId),
+    sort_by: "popularity.desc",
+    include_adult: "false",
+    language: "en-US",
+    page: "1",
+  });
+
 export const getMovieDetails = (id: string): Promise<MovieDetails> =>
   fetchTMDB<MovieDetails>(`/movie/${id}`, {
     append_to_response: "videos,credits",

@@ -4,6 +4,7 @@ export interface Movie {
   poster_path: string | null;
   backdrop_path: string | null;
   vote_average: number;
+  vote_count?: number;
   release_date: string;
   overview: string;
   genre_ids?: number[];
@@ -22,6 +23,7 @@ export interface VideoResult {
   name: string;
   site: string;
   type: string;
+  official?: boolean;
 }
 
 export interface MovieDetails extends Movie {

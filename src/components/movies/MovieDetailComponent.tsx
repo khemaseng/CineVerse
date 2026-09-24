@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Star, Clock, Calendar } from "lucide-react";
 import { tmdbImage } from "@/lib/api/tmdb";
 import { MovieCastComponent } from "./MovieCastComponent";
-import { MovieTrailerComponent } from "./MovieTrailerComponent";
+import TrailerSection from "@/components/TrailerSection";
 import type { MovieDetails } from "@/lib/api/types/movie";
 
 export function MovieDetailComponent({ movie }: { movie: MovieDetails }) {
@@ -66,9 +66,9 @@ export function MovieDetailComponent({ movie }: { movie: MovieDetails }) {
             </p>
 
             <MovieCastComponent cast={movie.credits?.cast || []} />
-            <MovieTrailerComponent videos={movie.videos?.results} />
           </div>
         </div>
+        <TrailerSection videos={movie.videos?.results} />
       </div>
     </div>
   );
