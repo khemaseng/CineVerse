@@ -1,4 +1,3 @@
-
 import type { Movie, MovieDetails } from "./types/movie";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
@@ -11,12 +10,12 @@ export const tmdbImage = (path: string | null, size = "w500") => {
 
 async function fetchTMDB<T>(
   endpoint: string,
-  params: Record<string, string> = {}
+  params: Record<string, string> = {},
 ): Promise<T> {
   const url = new URL(`${TMDB_BASE_URL}${endpoint}`);
   url.searchParams.append(
     "api_key",
-    process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
+    process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
   );
 
   Object.entries(params).forEach(([key, val]) => {
@@ -79,7 +78,6 @@ export async function getMovies({
   page = 1,
 }: GetMoviesParams = {}): Promise<GetMoviesResponse> {
   const uiPage = Math.max(1, page);
-  // TMDB returns 20 items per page. Since we want 10 items per UI page (2 rows x 5 cards):
   const tmdbPage = Math.ceil(uiPage / 2);
 
   let endpoint = "/discover/movie";
@@ -115,7 +113,7 @@ export async function getMovies({
   const totalResults = data.total_results || 0;
   const totalPages = Math.min(
     Math.ceil(totalResults / 10),
-    (data.total_pages || 1) * 2
+    (data.total_pages || 1) * 2,
   );
 
   return {
@@ -127,18 +125,31 @@ export async function getMovies({
 }
 
 export const getTrendingMovies = (
-  timeWindow: "day" | "week" = "day"
+  timeWindow: "day" | "week" = "day",
 ): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>(`/trending/movie/${timeWindow}`);
 
 export const getNowPlayingMovies = (): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>("/movie/now_playing");
 
+export const getNowPlaying = getNowPlayingMovies;
+
 export const getTopRatedMovies = (): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>("/movie/top_rated");
 
 export const getUpcomingMovies = (): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>("/movie/upcoming");
+
+export const getMoviesByGenre = (
+  genreId: number,
+): Promise<{ results: Movie[] }> =>
+  fetchTMDB<{ results: Movie[] }>("/discover/movie", {
+    with_genres: String(genreId),
+    sort_by: "popularity.desc",
+    include_adult: "false",
+    language: "en-US",
+    page: "1",
+  });
 
 export const getMovieDetails = (id: string): Promise<MovieDetails> =>
   fetchTMDB<MovieDetails>(`/movie/${id}`, {
