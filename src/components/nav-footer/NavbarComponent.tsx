@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggleComponent } from "./ThemeToggleComponent";
+import { LogoComponent } from "@/components/brand/LogoComponent";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
@@ -16,13 +17,16 @@ const NAV_ITEMS = [
 export function NavbarComponent() {
   const pathname = usePathname();
 
+  // Hide Navbar on Login and Register / Auth pages
+  if (pathname?.startsWith("/auth") || pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-gold/10 bg-white/80 backdrop-blur-md transition-colors duration-200 dark:bg-[#041226]/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Brand Logo (Text Only) */}
-        <Link href="/" className="text-xl font-bold tracking-tight text-navy-blue dark:text-white">
-          Cine<span className="text-primary-gold">Verse</span>
-        </Link>
+        {/* Brand Logo */}
+        <LogoComponent size="xs" />
 
         {/* Navigation Links */}
         <nav className="hidden items-center gap-8 md:flex">
@@ -48,17 +52,12 @@ export function NavbarComponent() {
         <div className="flex items-center gap-4">
           <ThemeToggleComponent />
           <div className="flex items-center gap-2">
-            <Link
-              href="/auth/login"
-              className="px-4 py-2 text-sm font-medium text-navy-blue transition-colors hover:text-primary-gold dark:text-white dark:hover:text-primary-gold"
-            >
-              Log In
-            </Link>
+           
             <Link
               href="/auth/register"
               className="rounded-lg bg-primary-gold px-4 py-2 text-sm font-semibold text-navy-blue shadow-md transition-all hover:bg-navy-blue hover:text-primary-gold"
             >
-              Sign Up
+              Get Start
             </Link>
           </div>
         </div>

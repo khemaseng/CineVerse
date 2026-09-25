@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Globe, Share2, MessageSquare } from "lucide-react";
+import { LogoComponent } from "@/components/brand/LogoComponent";
 
 const FOOTER_LINKS = [
   {
@@ -23,15 +25,20 @@ const FOOTER_LINKS = [
 ];
 
 export function FooterComponent() {
+  const pathname = usePathname();
+
+  // Hide Footer on Login and Register / Auth pages
+  if (pathname?.startsWith("/auth") || pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
+
   return (
     <footer className="border-t border-primary-gold/10 bg-white transition-colors duration-200 dark:bg-[#041226]">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* Brand Info */}
           <div>
-            <Link href="/" className="text-lg font-bold text-navy-blue dark:text-white">
-              Cine<span className="text-primary-gold">Verse</span>
-            </Link>
+            <LogoComponent size="md" />
             <p className="mt-3 max-w-xs text-sm text-navy-blue/70 dark:text-white/70">
               Discover, explore, and track the movies you love — powered by TMDB.
             </p>
