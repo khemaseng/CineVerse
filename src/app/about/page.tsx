@@ -107,44 +107,50 @@ export default function AboutUs() {
   return (
     <main className="min-h-screen bg-white dark:bg-[#0B132A] text-gray-900 dark:text-white transition-colors duration-300">
       {/* Hero Section */}
+      {/* Hero Section */}
       <section className="text-center px-6 pt-16 pb-12 max-w-4xl mx-auto">
         <p className="text-amber-500 font-semibold tracking-wider text-xs md:text-sm uppercase mb-3">
           ABOUT CINEVERSE
         </p>
+
         <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-4 text-gray-900 dark:text-white">
-          <span className="text-amber-500">Hello Everyone</span> Movie Tickets
-          with Confidence
+          <span className="text-amber-500">Rent &amp; Stream</span> Movies with
+          Confidence
         </h1>
+
         <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-8">
-          CineVerse connects movie fans who have tickets to spare with fans who
-          need one - fast, secure, and hassle-free.
+          CineVerse delivers instant access to top releases, cult classics, and
+          trending titles with secure, lightning-fast digital checkout.
         </p>
+
         <button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors">
-          List or Find a Trending
+          Start Streaming Now
         </button>
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 text-center">
           <div className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm transition-colors">
             <p className="text-xs text-amber-500 font-medium mb-1">
-              Trusted By
+              Active Streamers
             </p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
-              10,000 users
+              10,000+
             </p>
           </div>
+
           <div className="bg-white dark:bg-[#111C35] border border-amber-500 rounded-xl p-5 shadow-md">
             <p className="text-xs text-amber-500 font-medium mb-1">
-              Tickets Traded
+              Movies Streamed
             </p>
             <p className="text-xl font-bold text-amber-500">25,000+</p>
           </div>
+
           <div className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm transition-colors">
             <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mb-1">
-              Satisfaction
+              Payment Success Rate
             </p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
-              98%
+              99.9%
             </p>
           </div>
         </div>
