@@ -6,15 +6,31 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Eye, EyeOff, Loader2, Mail, Lock, Shield, FileText, HelpCircle } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Mail,
+  Lock,
+  Shield,
+  FileText,
+  HelpCircle,
+} from "lucide-react";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
-import { loginWithEmail, loginWithGoogle, loginWithGithub, getAuthErrorMessage } from "@/lib/auth/auth-service";
+import {
+  loginWithEmail,
+  loginWithGoogle,
+  loginWithGithub,
+  getAuthErrorMessage,
+} from "@/lib/auth/auth-service";
 
 export function LoginFormComponent() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
+  const [socialLoading, setSocialLoading] = useState<
+    "google" | "github" | null
+  >(null);
   const [rememberMe, setRememberMe] = useState(false);
 
   const {
@@ -76,7 +92,11 @@ export function LoginFormComponent() {
 
   return (
     <div className="space-y-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5" noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-3.5"
+        noValidate
+      >
         {/* Email Address */}
         <div className="space-y-1">
           <label
@@ -163,7 +183,10 @@ export function LoginFormComponent() {
               onChange={(e) => setRememberMe(e.target.checked)}
               className="h-4 w-4 rounded border-gray-300 text-navy-blue focus:ring-navy-blue dark:border-gray-600 cursor-pointer"
             />
-            <label htmlFor="remember" className="text-xs text-muted-foreground select-none cursor-pointer">
+            <label
+              htmlFor="remember"
+              className="text-xs text-muted-foreground select-none cursor-pointer"
+            >
               Remember me
             </label>
           </div>
