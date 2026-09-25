@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TMDB_GENRES } from "@/lib/api/tmdb";
@@ -10,17 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function GenrePage() {
-=======
-import Link from "next/link";
-import { genres } from "@/lib/api/genres";
-
-export const metadata = {
-  title: "Movie Genres - Cineverse",
-  description: "Explore all movie genres and categories.",
-};
-
-export default function GenresIndexPage() {
->>>>>>> fff9fa6eac36a2dcaa73d705a1bae94b6f643a6b
   return (
     <main className="mx-auto min-h-screen max-w-7xl px-6 py-12">
       <div className="mb-10 text-center">

@@ -9,13 +9,19 @@ interface GenrePageProps {
 
 export default async function GenreDynamicPage({ params }: GenrePageProps) {
   const { genreId: segment } = await params;
+
+  // Resolve whether user passed a numeric ID (e.g. "28") or a slug name (e.g. "action")
   const genre = /^\d+$/.test(segment)
     ? getGenreById(Number(segment))
     : getGenreBySlug(segment);
 
-  if (!genre) notFound();
+  if (!genre) {
+    notFound();
+  }
 
-  const { results } = await getMoviesByGenre(genre.id);
+  // Fetch movies belonging to the resolved genre ID
+  const response = await getMoviesByGenre(genre.id);
+  const movies = response?.results ?? [];
 
-  return <GenreListComponent genre={genre} movies={results} />;
+  return <GenreListComponent genre={genre} movies={movies} />;
 }
