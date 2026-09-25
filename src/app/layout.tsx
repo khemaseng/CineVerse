@@ -6,7 +6,6 @@ import { FooterComponent } from "@/components/nav-footer/FooterComponent";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "sonner";
 
-// 1. Initialize fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,24 +22,27 @@ const notoKhmer = Noto_Sans_Khmer({
   weight: ["400", "500", "700"],
 });
 
-// 2. Safe Base URL parsing to prevent build-time ERR_INVALID_URL
-const getBaseUrl = (): URL => {
-  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (envUrl) {
-    try {
-      const formattedUrl = envUrl.startsWith("http")
-        ? envUrl
-        : `https://${envUrl}`;
-      return new URL(formattedUrl);
-    } catch {
-      // Fallback if URL parsing fails
-    }
+const getMetadataBase = (): URL => {
+  const envUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : null) ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+    "https://cine-verse-8i8.vercel.app";
+
+  try {
+    const formattedUrl = envUrl.startsWith("http")
+      ? envUrl
+      : `https://${envUrl}`;
+    return new URL(formattedUrl);
+  } catch {
+    return new URL("https://cine-verse-8i8.vercel.app");
   }
-  return new URL("https://cine-verse.vercel.app");
 };
 
 export const metadata: Metadata = {
-  metadataBase: getBaseUrl(),
+  metadataBase: getMetadataBase(),
   title: {
     template: "%s | CineVerse",
     default: "CineVerse - Modern Movie Discovery & Streaming",
@@ -100,16 +102,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     >
       <body className="flex min-h-screen flex-col font-sans bg-background text-foreground">
         <ThemeProvider>
-          {/* Global Header */}
           <NavbarComponent />
-
-          {/* Page Body */}
           <main className="flex-1 w-full">{children}</main>
-
-          {/* Global Footer */}
           <FooterComponent />
-
-          {/* Toast notifications */}
           <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>

@@ -14,19 +14,32 @@ import { UpcomingMoviesComponent } from "@/components/landing/UpcomingMoviesComp
 import { CoverFlowCarouselComponent } from "@/components/landing/CoverFlowCarouselComponent";
 
 export const metadata: Metadata = {
-  title: {
-    template: "%s | CineVerse",
-    default: "CineVerse",
-  },
-  keywords:
-    "movies, films, cinema, movie discovery, movie reviews, actors, genres",
+  title: "Home | CineVerse",
   description:
     "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
   openGraph: {
-    title: "CineVerse",
+    title: "Home | CineVerse",
     description:
-      "CineVerse brings the world of cinema closer to you. Discover movies, explore stories, find new favorites, and experience the magic behind every film.",
-    images: ["/thumbnail.png"],
+      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
+    url: "/",
+    siteName: "CineVerse",
+    images: [
+      {
+        url: "/opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "CineVerse Movie Platform",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Home | CineVerse",
+    description:
+      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
+    images: ["/opengraph.png"],
   },
 };
 
