@@ -71,7 +71,11 @@ export default async function LandingPage() {
       {/* 5. Trending Collection */}
       <TrendingPreviewComponent movies={trendingData?.results || []} />
 
+<<<<<<< HEAD
       {/* 6. 3D CoverFlow Carousel */}
+=======
+      {/* 6. CoverFlowCarousel */}
+>>>>>>> fff9fa6eac36a2dcaa73d705a1bae94b6f643a6b
       <CoverFlowCarouselComponent movies={upcomingData?.results || []} />
 
       {/* 7. Cinematic Spotlight 2 (Card on the RIGHT) */}
