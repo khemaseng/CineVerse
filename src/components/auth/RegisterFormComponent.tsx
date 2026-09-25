@@ -1,90 +1,344 @@
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { Eye, EyeOff, Loader2, User, Mail, Lock, Shield, FileText, HelpCircle } from "lucide-react";
+import { registerSchema, type RegisterInput } from "@/lib/validations/auth";
+import { registerWithEmail, loginWithGoogle, loginWithGithub, getAuthErrorMessage } from "@/lib/auth/auth-service";
 
 export function RegisterFormComponent() {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
 
+  const onSubmit = async (data: RegisterInput) => {
+    setIsSubmitting(true);
     try {
-      // Add authentication backend call here
-      toast.success("Account created successfully!");
-      router.push("/login");
+      await registerWithEmail(data);
+      toast.success("Account created successfully! Welcome to CineVerse.");
+      router.push("/");
+      router.refresh();
     } catch (err) {
-      toast.error("Registration failed. Try again.");
+      const message = getAuthErrorMessage(err);
+      toast.error(message);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setSocialLoading("google");
+    try {
+      await loginWithGoogle();
+      toast.success("Signed in with Google successfully!");
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      const message = getAuthErrorMessage(err);
+      toast.error(message);
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
+  const handleGithubLogin = async () => {
+    setSocialLoading("github");
+    try {
+      await loginWithGithub();
+      toast.success("Signed in with GitHub successfully!");
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      const message = getAuthErrorMessage(err);
+      toast.error(message);
+    } finally {
+      setSocialLoading(null);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-1.5">
-        <label className="text-xs font-semibold text-muted-foreground">Full Name</label>
-        <input
-          type="text"
-          required
-          placeholder="John Doe"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
-        />
+    <div className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5" noValidate>
+        {/* Full Name */}
+        <div className="space-y-1">
+          <label
+            htmlFor="name"
+            className="text-xs font-semibold text-foreground flex items-center gap-1"
+          >
+            <span>Full Name</span>
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <User
+              size={17}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              id="name"
+              type="text"
+              autoComplete="name"
+              placeholder="John Doe"
+              {...register("name")}
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+                errors.name
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-border focus:border-navy-blue focus:ring-navy-blue/20 dark:focus:border-primary-gold dark:focus:ring-primary-gold/20"
+              }`}
+            />
+          </div>
+          {errors.name && (
+            <p className="text-xs font-medium text-red-500">
+              {errors.name.message}
+            </p>
+          )}
+        </div>
+
+        {/* Email Address */}
+        <div className="space-y-1">
+          <label
+            htmlFor="email"
+            className="text-xs font-semibold text-foreground flex items-center gap-1"
+          >
+            <span>Email</span>
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Mail
+              size={17}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="name@example.com"
+              {...register("email")}
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+                errors.email
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-border focus:border-navy-blue focus:ring-navy-blue/20 dark:focus:border-primary-gold dark:focus:ring-primary-gold/20"
+              }`}
+            />
+          </div>
+          {errors.email && (
+            <p className="text-xs font-medium text-red-500">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+
+        {/* Password */}
+        <div className="space-y-1">
+          <label
+            htmlFor="password"
+            className="text-xs font-semibold text-foreground flex items-center gap-1"
+          >
+            <span>Password</span>
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Lock
+              size={17}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="••••••••"
+              {...register("password")}
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-11 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+                errors.password
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-border focus:border-navy-blue focus:ring-navy-blue/20 dark:focus:border-primary-gold dark:focus:ring-primary-gold/20"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-xs font-medium text-red-500">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+
+        {/* Confirm Password */}
+        <div className="space-y-1">
+          <label
+            htmlFor="confirmPassword"
+            className="text-xs font-semibold text-foreground flex items-center gap-1"
+          >
+            <span>Confirm Password</span>
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Lock
+              size={17}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="••••••••"
+              {...register("confirmPassword")}
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-11 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+                errors.confirmPassword
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-border focus:border-navy-blue focus:ring-navy-blue/20 dark:focus:border-primary-gold dark:focus:ring-primary-gold/20"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.confirmPassword && (
+            <p className="text-xs font-medium text-red-500">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
+
+        {/* Navy Register Submit Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting || Boolean(socialLoading)}
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-blue text-white font-bold shadow-md shadow-navy-blue/20 transition-all hover:bg-navy-blue/90 hover:shadow-lg active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 text-sm mt-3"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 size={18} className="animate-spin" />
+              <span>Creating account...</span>
+            </>
+          ) : (
+            <span>Register</span>
+          )}
+        </button>
+      </form>
+
+      {/* Divider Matching the Design */}
+      <div className="my-5 flex items-center justify-center gap-4">
+        <div className="h-[1px] flex-1 bg-border/80" />
+        <span className="text-xs font-medium text-muted-foreground/80 whitespace-nowrap">
+          or sign up with
+        </span>
+        <div className="h-[1px] flex-1 bg-border/80" />
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-xs font-semibold text-muted-foreground">Username</label>
-        <input
-          type="text"
-          required
-          placeholder="johndoe"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
-        />
+      {/* Social Login Buttons (Google & GitHub) */}
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          disabled={Boolean(socialLoading) || isSubmitting}
+          className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-border bg-card px-4 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-muted/50 hover:border-navy-blue/40 active:scale-98 disabled:opacity-50"
+        >
+          {socialLoading === "google" ? (
+            <Loader2 size={16} className="animate-spin" />
+          ) : (
+            <svg className="h-4 w-4" viewBox="0 0 24 24">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                fill="#EA4335"
+              />
+            </svg>
+          )}
+          <span>Google</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleGithubLogin}
+          disabled={Boolean(socialLoading) || isSubmitting}
+          className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-border bg-card px-4 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-muted/50 hover:border-navy-blue/40 active:scale-98 disabled:opacity-50"
+        >
+          {socialLoading === "github" ? (
+            <Loader2 size={16} className="animate-spin" />
+          ) : (
+            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+              />
+            </svg>
+          )}
+          <span>GitHub</span>
+        </button>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-xs font-semibold text-muted-foreground">Email</label>
-        <input
-          type="email"
-          required
-          placeholder="name@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
-        />
+      {/* Switch to Login */}
+      <div className="text-center text-xs text-muted-foreground pt-1">
+        Already have an account?{" "}
+        <Link
+          href="/auth/login"
+          className="font-bold text-navy-blue dark:text-primary-gold hover:underline ml-1"
+        >
+          Sign In
+        </Link>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-xs font-semibold text-muted-foreground">Password</label>
-        <input
-          type="password"
-          required
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-red"
-        />
+      {/* Footer Legal Links */}
+      <div className="flex items-center justify-center gap-4 pt-3 border-t border-border/60 text-[11px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1 hover:text-foreground cursor-pointer">
+          <FileText size={12} />
+          Terms
+        </span>
+        <span>•</span>
+        <span className="inline-flex items-center gap-1 hover:text-foreground cursor-pointer">
+          <Shield size={12} />
+          Privacy
+        </span>
+        <span>•</span>
+        <span className="inline-flex items-center gap-1 hover:text-foreground cursor-pointer">
+          <HelpCircle size={12} />
+          Help
+        </span>
       </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="h-10 w-full rounded-lg bg-primary-red font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-      >
-        {loading ? "Creating account..." : "Create Account"}
-      </button>
-    </form>
+    </div>
   );
 }

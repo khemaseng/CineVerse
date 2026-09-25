@@ -68,7 +68,6 @@
   --font-weight-regular: 400;
   --font-weight-bold: 700;
 }
-
 @layer base {
   :root {
     --primary-gold: #f3a812;

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -24,7 +23,9 @@ export default function DataTablesPage() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground">Movie Management Table</h1>
+        <h1 className="text-3xl font-bold text-foreground">
+          Movie Management Table
+        </h1>
         <p className="text-sm text-muted-foreground mt-1">
           Search and filter movies live with SWR
         </p>
@@ -37,7 +38,9 @@ export default function DataTablesPage() {
         setCategory={setCategory}
       />
 
-      {error && <div className="text-red-500 py-4">Failed to fetch movie data.</div>}
+      {error && (
+        <div className="text-red-500 py-4">Failed to fetch movie data.</div>
+      )}
 
       <DataTable columns={columns} data={movies} isLoading={isLoading} />
     </section>
