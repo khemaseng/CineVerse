@@ -23,18 +23,18 @@ const notoKhmer = Noto_Sans_Khmer({
   subsets: ["khmer"],
   weight: ["400", "500", "700"], // Define weights needed for Khmer text
 });
-
 export const metadata: Metadata = {
   title: {
-    template: "%s | Tos Tinh",
-    default: "Tos Tinh",
+    template: "%s | CineVerse",
+    default: "CineVerse",
   },
-  keywords: "T-Shirts for women, jewelery, E-commerce, men clothing, women clothing",
-  description: "Tos Tinh is a modern platform and modern vibe for all costumers.",
+  keywords: "movies, films, cinema, movie discovery, movie reviews, actors, genres",
+  description:
+    "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
   openGraph: {
-    title: "Tos Tinh - M2",
+    title: "CineVerse",
     description:
-      "Tos Tinh refers to small retail and online lifestyle or fashion businesses in Phnom Penh, such as Tos Tinh 356 Store and Tos tinh-21, offering modern clothing and products through social media platforms.",
+      "CineVerse brings the world of cinema closer to you. Discover movies, explore stories, find new favorites, and experience the magic behind every film.",
     images: ["/thumbnail.png"],
   },
 };
