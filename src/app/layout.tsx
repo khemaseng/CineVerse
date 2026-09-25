@@ -23,11 +23,24 @@ const notoKhmer = Noto_Sans_Khmer({
   weight: ["400", "500", "700"],
 });
 
-// 2. Base URL for SEO OpenGraph resolution
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+// 2. Safe Base URL parsing to prevent build-time ERR_INVALID_URL
+const getBaseUrl = (): URL => {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (envUrl) {
+    try {
+      const formattedUrl = envUrl.startsWith("http")
+        ? envUrl
+        : `https://${envUrl}`;
+      return new URL(formattedUrl);
+    } catch {
+      // Fallback if URL parsing fails
+    }
+  }
+  return new URL("https://cine-verse.vercel.app");
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: getBaseUrl(),
   title: {
     template: "%s | CineVerse",
     default: "CineVerse - Modern Movie Discovery & Streaming",
@@ -48,14 +61,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteUrl,
+    url: "/",
     siteName: "CineVerse",
     title: "CineVerse - Stream & Discover Movies",
     description:
       "Explore movies, discover new favorites, and experience cinema in high definition.",
     images: [
       {
-        url: "/thumbnail.png",
+        url: "/opengraph.png",
         width: 1200,
         height: 630,
         alt: "CineVerse Movie Platform",
@@ -67,7 +80,7 @@ export const metadata: Metadata = {
     title: "CineVerse - Stream & Discover Movies",
     description:
       "Explore movies, discover new favorites, and experience cinema in high definition.",
-    images: ["/thumbnail.png"],
+    images: ["/opengraph.png"],
   },
   icons: {
     icon: "/favicon.ico",

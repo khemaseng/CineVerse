@@ -1,16 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Open_Sans } from "next/font/google";
 
-const googleSans = Open_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+export const metadata: Metadata = {
+  title: "404 - Page Not Found",
+  description:
+    "The page or reel you requested is unavailable or has been archived.",
+  openGraph: {
+    title: "404 - Page Not Found | CineVerse",
+    description:
+      "The page or reel you requested is unavailable or has been archived.",
+    images: ["/opengraph.png"],
+  },
+};
 
 export default function NotFound() {
   return (
-    <main
-      className={`${googleSans.className} relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#070b14] px-6 text-center text-white`}
-    >
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#070b14] px-6 text-center text-white font-sans">
       {/* Subtle ambient spotlight glow behind */}
       <div className="pointer-events-none absolute -top-32 h-96 w-96 rounded-full bg-amber-500/5 blur-3xl animate-pulse" />
 
