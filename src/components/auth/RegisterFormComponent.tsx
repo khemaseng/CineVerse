@@ -6,16 +6,33 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Eye, EyeOff, Loader2, User, Mail, Lock, Shield, FileText, HelpCircle } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  User,
+  Mail,
+  Lock,
+  Shield,
+  FileText,
+  HelpCircle,
+} from "lucide-react";
 import { registerSchema, type RegisterInput } from "@/lib/validations/auth";
-import { registerWithEmail, loginWithGoogle, loginWithGithub, getAuthErrorMessage } from "@/lib/auth/auth-service";
+import {
+  registerWithEmail,
+  loginWithGoogle,
+  loginWithGithub,
+  getAuthErrorMessage,
+} from "@/lib/auth/auth-service";
 
 export function RegisterFormComponent() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
+  const [socialLoading, setSocialLoading] = useState<
+    "google" | "github" | null
+  >(null);
 
   const {
     register,
@@ -78,7 +95,11 @@ export function RegisterFormComponent() {
 
   return (
     <div className="space-y-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5" noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-3.5"
+        noValidate
+      >
         {/* Full Name */}
         <div className="space-y-1">
           <label
@@ -218,7 +239,9 @@ export function RegisterFormComponent() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              aria-label={
+                showConfirmPassword ? "Hide password" : "Show password"
+              }
               className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
