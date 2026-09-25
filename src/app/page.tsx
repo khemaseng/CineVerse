@@ -42,11 +42,11 @@ export default async function LandingPage() {
   // Top 5 movies for the full-screen hero carousel
   const heroMovies = trendingData?.results?.slice(0, 5) || [];
 
-  // Spotlight 1: Resident Evil / Top Rated pick (Card on LEFT)
+  // Spotlight 1: Top Rated pick (Card on LEFT)
   const spotlightLeftMovie =
     topRatedData?.results?.[0] || trendingData?.results?.[5];
 
-  // Spotlight 2: Batman / Upcoming premiere (Card on RIGHT)
+  // Spotlight 2: Upcoming premiere (Card on RIGHT)
   const spotlightRightMovie =
     upcomingData?.results?.[0] || topRatedData?.results?.[1];
 
