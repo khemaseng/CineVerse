@@ -1,24 +1,64 @@
 
-import { getTrendingMovies, getNowPlayingMovies } from "@/lib/api/tmdb";
+import {
+  getTrendingMovies,
+  getNowPlayingMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+} from "@/lib/api/tmdb";
 import { HeroBannerComponent } from "@/components/landing/HeroBannerComponent";
 import { GenresShowcaseComponent } from "@/components/landing/GenresShowcaseComponent";
 import { FeaturedMoviesComponent } from "@/components/landing/FeaturedMoviesComponent";
 import { TrendingPreviewComponent } from "@/components/landing/TrendingPreviewComponent";
+import { CinematicSpotlightComponent } from "@/components/landing/CinematicSpotlightComponent";
+import { UpcomingMoviesComponent } from "@/components/landing/UpcomingMoviesComponent";
+import { CoverFlowCarouselComponent } from "@/components/landing/CoverFlowCarouselComponent";
 
 export default async function LandingPage() {
-  const [trendingData, nowPlayingData] = await Promise.all([
-    getTrendingMovies("day"),
-    getNowPlayingMovies(),
-  ]);
+  const [trendingData, nowPlayingData, topRatedData, upcomingData] =
+    await Promise.all([
+      getTrendingMovies("day"),
+      getNowPlayingMovies(),
+      getTopRatedMovies(),
+      getUpcomingMovies(),
+    ]);
 
+  // Top 5 movies for the full-screen hero carousel
   const heroMovies = trendingData?.results?.slice(0, 5) || [];
 
+  // Spotlight 1: Resident Evil / Top Rated pick (Card on LEFT)
+  const spotlightLeftMovie =
+    topRatedData?.results?.[0] || trendingData?.results?.[5];
+
+  // Spotlight 2: Batman / Upcoming premiere (Card on RIGHT)
+  const spotlightRightMovie =
+    upcomingData?.results?.[0] || topRatedData?.results?.[1];
+
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pb-16">
+      {/* 1. Full-Height Hero Banner */}
       <HeroBannerComponent movies={heroMovies} />
+
+      {/* 2. Quick Genre Filter Pills */}
       <GenresShowcaseComponent />
+
+      {/* 3. Now Playing In Theaters (4 Cards) */}
       <FeaturedMoviesComponent movies={nowPlayingData?.results || []} />
+
+      {/* 4. Cinematic Spotlight 1 (Card on the LEFT) */}
+      <CinematicSpotlightComponent
+        movie={spotlightLeftMovie}
+        badgeText="PREMIERE SPOTLIGHT"
+        layout="left"
+      />
+
+      {/* 5. Trending Collection (4 Cards) */}
       <TrendingPreviewComponent movies={trendingData?.results || []} />
+      
+       {/* 6. CoverFlowCarousel */}
+      <CoverFlowCarouselComponent movies={upcomingData?.results || []} />
+
+      {/* 7. Upcoming Releases (4 Cards) */}
+      <UpcomingMoviesComponent movies={upcomingData?.results || []} />
     </main>
   );
 }
