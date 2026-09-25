@@ -36,6 +36,12 @@ export const getTrendingMovies = (
 export const getNowPlayingMovies = (): Promise<{ results: Movie[] }> =>
   fetchTMDB<{ results: Movie[] }>("/movie/now_playing");
 
+export const getTopRatedMovies = (): Promise<{ results: Movie[] }> =>
+  fetchTMDB<{ results: Movie[] }>("/movie/top_rated");
+
+export const getUpcomingMovies = (): Promise<{ results: Movie[] }> =>
+  fetchTMDB<{ results: Movie[] }>("/movie/upcoming");
+
 export const getMovieDetails = (id: string): Promise<MovieDetails> =>
   fetchTMDB<MovieDetails>(`/movie/${id}`, {
     append_to_response: "videos,credits",
