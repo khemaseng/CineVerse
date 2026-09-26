@@ -20,12 +20,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Home | CineVerse",
     description:
-      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
+      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing.",
     url: "/",
     siteName: "CineVerse",
     images: [
       {
-        url: "/opengraph.png",
+        url: "/opengraph-fix.png",
         width: 1200,
         height: 630,
         alt: "CineVerse Movie Platform",
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Home | CineVerse",
     description:
-      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
-    images: ["/opengraph.png"],
+      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing.",
+    images: ["/opengraph-fix.png"],
   },
 };
 

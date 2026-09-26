@@ -70,7 +70,7 @@ export const metadata: Metadata = {
       "Explore movies, discover new favorites, and experience cinema in high definition.",
     images: [
       {
-        url: "/opengraph.png",
+        url: "/opengraph-fix.png",
         width: 1200,
         height: 630,
         alt: "CineVerse Movie Platform",
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     title: "CineVerse - Stream & Discover Movies",
     description:
       "Explore movies, discover new favorites, and experience cinema in high definition.",
-    images: ["/opengraph.png"],
+    images: ["/opengraph-fix.png"],
   },
   icons: {
     icon: "/favicon.ico",
