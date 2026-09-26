@@ -100,7 +100,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoKhmer.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col font-sans bg-background text-foreground">
+      <body className="flex min-h-screen flex-col font-sans bg-white dark:bg-[#041226] text-[#041226] dark:text-white transition-colors duration-200">
         <ThemeProvider>
           <NavbarComponent />
           <main className="flex-1 w-full">{children}</main>

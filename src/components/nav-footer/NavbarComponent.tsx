@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -17,11 +16,6 @@ const NAV_ITEMS = [
 
 export function NavbarComponent() {
   const pathname = usePathname();
-
-  // Hide Navbar on Login and Register / Auth pages
-  if (pathname?.startsWith("/auth") || pathname === "/login" || pathname === "/signup") {
-    return null;
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-gold/10 bg-white/80 backdrop-blur-md transition-colors duration-200 dark:bg-[#041226]/80">
@@ -53,7 +47,6 @@ export function NavbarComponent() {
         <div className="flex items-center gap-4">
           <ThemeToggleComponent />
           <div className="flex items-center gap-2">
-           
             <Link
               href="/auth/register"
               className="rounded-lg bg-primary-gold px-4 py-2 text-sm font-semibold text-navy-blue shadow-md transition-all hover:bg-navy-blue hover:text-primary-gold"
