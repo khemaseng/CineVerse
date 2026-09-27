@@ -1,12 +1,31 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useSyncExternalStore } from "react";
+import { getCurrentUser } from "@/lib/auth/auth-service";
 import Image from "next/image";
 import { User, Camera, Trash2, Shield, Bell } from "lucide-react";
 import { toast } from "sonner";
 
 export default function UserProfilePage() {
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const sessionSnapshot = useSyncExternalStore(
+    (onChange) => {
+      window.addEventListener("storage", onChange);
+      window.addEventListener("cineverse-auth-change", onChange);
+      return () => {
+        window.removeEventListener("storage", onChange);
+        window.removeEventListener("cineverse-auth-change", onChange);
+      };
+    },
+    () => JSON.stringify({
+      user: getCurrentUser(),
+      avatarUrl: window.localStorage.getItem("cineverse-demo-avatar"),
+    }),
+    () => "null",
+  );
+  const { user, avatarUrl: storedAvatar } = JSON.parse(sessionSnapshot) as {
+    user: { name: string; email: string } | null;
+    avatarUrl: string | null;
+  };
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle file selection and preview
@@ -17,15 +36,23 @@ export default function UserProfilePage() {
         toast.error("File size must be less than 2MB.");
         return;
       }
-      const previewUrl = URL.createObjectURL(file);
-      setAvatarUrl(previewUrl);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = typeof reader.result === "string" ? reader.result : null;
+        if (image) {
+          window.localStorage.setItem("cineverse-demo-avatar", image);
+          window.dispatchEvent(new Event("cineverse-auth-change"));
+        }
+      };
+      reader.readAsDataURL(file);
       toast.success("Profile picture updated!");
     }
   };
 
   // Remove current avatar
   const handleRemoveAvatar = () => {
-    setAvatarUrl(null);
+    window.localStorage.removeItem("cineverse-demo-avatar");
+    window.dispatchEvent(new Event("cineverse-auth-change"));
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -44,7 +71,7 @@ export default function UserProfilePage() {
         </p>
       </div>
 
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+      <form key={user?.email ?? "loading"} onSubmit={(e) => e.preventDefault()} className="space-y-6">
         {/* Main Card */}
         <div className="space-y-8 rounded-xl border border-border/50 bg-card/40 p-6 backdrop-blur-xl">
           {/* Avatar Section */}
@@ -60,9 +87,9 @@ export default function UserProfilePage() {
 
             <div className="relative group">
               <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-muted text-muted-foreground">
-                {avatarUrl ? (
+                {storedAvatar ? (
                   <Image
-                    src={avatarUrl}
+                    src={storedAvatar}
                     alt="Profile Picture"
                     fill
                     className="object-cover"
@@ -99,7 +126,7 @@ export default function UserProfilePage() {
                   Change Photo
                 </button>
 
-                {avatarUrl && (
+                {storedAvatar && (
                   <button
                     type="button"
                     onClick={handleRemoveAvatar}
@@ -121,7 +148,7 @@ export default function UserProfilePage() {
               </label>
               <input
                 type="text"
-                defaultValue="John Doe"
+                defaultValue={user?.name ?? ""}
                 className="h-10 w-full rounded-lg border border-border bg-background/50 px-3 text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary-red"
               />
             </div>
@@ -132,7 +159,7 @@ export default function UserProfilePage() {
               </label>
               <input
                 type="text"
-                defaultValue="johndoe"
+                defaultValue={user?.name.toLowerCase().replace(/[^a-z0-9]+/g, "") ?? ""}
                 className="h-10 w-full rounded-lg border border-border bg-background/50 px-3 text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary-red"
               />
             </div>
@@ -143,7 +170,7 @@ export default function UserProfilePage() {
               </label>
               <input
                 type="email"
-                defaultValue="john@example.com"
+                defaultValue={user?.email ?? ""}
                 className="h-10 w-full rounded-lg border border-border bg-background/50 px-3 text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary-red"
               />
             </div>
