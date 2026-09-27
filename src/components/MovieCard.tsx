@@ -9,7 +9,9 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie, priority = false }: MovieCardProps) {
-  const posterUrl = movie.poster_path ? tmdbImage(movie.poster_path, "w500") : null;
+  const posterUrl = movie.poster_path
+    ? tmdbImage(movie.poster_path, "w500")
+    : null;
   const year = movie.release_date
     ? new Date(movie.release_date).getFullYear()
     : null;
@@ -31,13 +33,13 @@ export default function MovieCard({ movie, priority = false }: MovieCardProps) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center p-4 text-center text-xs text-zinc-500">
+          <div className="flex h-full w-full items-center justify-center p-4 text-center text-base text-zinc-500">
             No Poster Available
           </div>
         )}
 
         {/* Rating Badge */}
-        <div className="absolute right-2.5 top-2.5 flex items-center gap-1 rounded-md bg-black/70 px-2 py-1 text-xs font-semibold text-amber-400 backdrop-blur-md">
+        <div className="absolute right-2.5 top-2.5 flex items-center gap-1 rounded-md bg-black/70 px-2 py-1 text-base font-semibold text-amber-400 backdrop-blur-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-3 w-3 fill-amber-400"
@@ -51,15 +53,17 @@ export default function MovieCard({ movie, priority = false }: MovieCardProps) {
 
       <div className="flex flex-1 flex-col p-3.5">
         <h3
-          className="line-clamp-1 text-sm font-semibold text-white transition-colors group-hover:text-amber-400"
+          className="line-clamp-1 text-lg font-semibold text-white transition-colors group-hover:text-amber-400"
           title={movie.title}
         >
           {movie.title}
         </h3>
-        <div className="mt-1.5 flex items-center justify-between text-xs text-zinc-400">
+        <div className="mt-1.5 flex items-center justify-between text-base text-zinc-400">
           <span>{year || "Unknown"}</span>
-          <span className="text-[11px] text-zinc-500">
-            {movie.vote_count ? `${movie.vote_count.toLocaleString()} votes` : ""}
+          <span className="text-[18px] text-zinc-500">
+            {movie.vote_count
+              ? `${movie.vote_count.toLocaleString()} votes`
+              : ""}
           </span>
         </div>
       </div>

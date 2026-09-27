@@ -76,7 +76,7 @@ export function MovieFilterComponent({
   };
 
   const hasActiveFilters = Boolean(
-    currentQuery || (currentSortBy && currentSortBy !== "popularity.desc")
+    currentQuery || (currentSortBy && currentSortBy !== "popularity.desc"),
   );
 
   return (
@@ -99,7 +99,7 @@ export function MovieFilterComponent({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search movies by title..."
-              className="w-full rounded-xl border border-border bg-muted/40 py-2.5 pl-10 pr-20 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 focus:border-primary-gold focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary-gold/20 transition-all"
+              className="w-full rounded-xl border border-border bg-muted/40 py-2.5 pl-10 pr-20 text-lg font-medium text-foreground placeholder:text-muted-foreground/70 focus:border-primary-gold focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary-gold/20 transition-all"
             />
             {searchTerm && (
               <button
@@ -113,7 +113,7 @@ export function MovieFilterComponent({
             )}
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-primary-gold px-3 py-1 text-xs font-semibold text-navy-blue transition-all hover:opacity-90 active:scale-95"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-primary-gold px-3 py-1 text-base font-semibold text-navy-blue transition-all hover:opacity-90 active:scale-95"
             >
               Search
             </button>
@@ -124,14 +124,17 @@ export function MovieFilterComponent({
         <div className="flex flex-wrap items-center gap-3">
           {/* Sort By Dropdown */}
           <div className="flex items-center gap-2">
-            <label htmlFor={sortSelectId} className="text-xs font-semibold text-muted-foreground">
+            <label
+              htmlFor={sortSelectId}
+              className="text-base font-semibold text-muted-foreground"
+            >
               Sort:
             </label>
             <select
               id={sortSelectId}
               value={currentSortBy}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-xs font-semibold text-foreground focus:border-primary-gold focus:outline-none focus:ring-2 focus:ring-primary-gold/20 transition-all cursor-pointer"
+              className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-base font-semibold text-foreground focus:border-primary-gold focus:outline-none focus:ring-2 focus:ring-primary-gold/20 transition-all cursor-pointer"
             >
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -146,7 +149,7 @@ export function MovieFilterComponent({
             <button
               type="button"
               onClick={handleResetAll}
-              className="flex items-center gap-1 rounded-lg border border-border bg-muted/30 px-3 py-2 text-xs font-medium text-muted-foreground hover:bg-muted/70 hover:text-foreground transition-all"
+              className="flex items-center gap-1 rounded-lg border border-border bg-muted/30 px-3 py-2 text-base font-medium text-muted-foreground hover:bg-muted/70 hover:text-foreground transition-all"
             >
               <RotateCcw size={13} />
               <span>Reset</span>

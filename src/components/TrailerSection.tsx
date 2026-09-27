@@ -22,10 +22,11 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
   });
 
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(
-    sortedVideos[0]?.id ?? null
+    sortedVideos[0]?.id ?? null,
   );
   const selectedVideo =
-    sortedVideos.find((video) => video.id === selectedVideoId) ?? sortedVideos[0];
+    sortedVideos.find((video) => video.id === selectedVideoId) ??
+    sortedVideos[0];
 
   if (sortedVideos.length === 0) {
     return null;
@@ -35,18 +36,19 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
     <div className="mt-16 border-t border-zinc-800 pt-10">
       <div className="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+          <h2 className="text-4xl font-bold tracking-tight text-white sm:text-4xl">
             Official Trailers & Videos
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-base text-zinc-400">
             Watch official trailers, teasers, and preview clips.
           </p>
         </div>
 
         {/* Video Type Badges / Count */}
-        <div className="text-xs text-zinc-400">
+        <div className="text-base text-zinc-400">
           <span className="rounded-full bg-zinc-800 px-3 py-1 font-medium text-zinc-300">
-            {sortedVideos.length} {sortedVideos.length === 1 ? "Video" : "Videos"} Available
+            {sortedVideos.length}{" "}
+            {sortedVideos.length === 1 ? "Video" : "Videos"} Available
           </span>
         </div>
       </div>
@@ -65,15 +67,17 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-zinc-900/90 border-t border-zinc-800">
             <div>
-              <h3 className="text-sm font-bold text-white sm:text-base">
+              <h3 className="text-lg font-bold text-white sm:text-base">
                 {selectedVideo.name}
               </h3>
-              <div className="mt-1 flex items-center gap-2 text-xs text-zinc-400">
+              <div className="mt-1 flex items-center gap-2 text-base text-zinc-400">
                 <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-semibold text-amber-400">
                   {selectedVideo.type}
                 </span>
                 {selectedVideo.official ? (
-                  <span className="text-[11px] text-zinc-400">• Official Release</span>
+                  <span className="text-[18px] text-zinc-400">
+                    • Official Release
+                  </span>
                 ) : null}
               </div>
             </div>
@@ -81,7 +85,7 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
               href={`https://www.youtube.com/watch?v=${selectedVideo.key}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-zinc-700"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-base font-semibold text-white transition-colors hover:bg-zinc-700"
             >
               Open in YouTube &rarr;
             </a>
@@ -132,7 +136,7 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
                   <span className="inline-block rounded bg-zinc-800 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-400">
                     {video.type}
                   </span>
-                  <h4 className="mt-1 line-clamp-1 text-xs font-semibold text-white group-hover:text-amber-400">
+                  <h4 className="mt-1 line-clamp-1 text-base font-semibold text-white group-hover:text-amber-400">
                     {video.name}
                   </h4>
                 </div>

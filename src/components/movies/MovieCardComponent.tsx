@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Star, Play } from "lucide-react";
+import { Star } from "lucide-react";
 import { tmdbImage } from "@/lib/api/tmdb";
 import type { Movie } from "@/lib/api/types/movie";
 
@@ -29,22 +29,16 @@ export function MovieCardComponent({ movie }: { movie: Movie }) {
         <Star size={12} className="fill-primary-gold text-primary-gold" />
         <span>{movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}</span>
       </div>
-
-      {/* Play Icon on Hover */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-gold text-navy-blue shadow-lg transition-transform duration-300 group-hover:scale-110">
-          <Play size={20} className="fill-navy-blue ml-0.5" />
-        </div>
-      </div>
-
-      {/* Bottom Content Metadata */}
-      <div className="absolute bottom-0 inset-x-0 p-4 transition-transform duration-300 group-hover:-translate-y-1">
-        <p className="text-[11px] font-semibold tracking-wider uppercase text-primary-gold">
-          {movie.release_date ? movie.release_date.slice(0, 4) : "Movie"}
-        </p>
-        <h3 className="line-clamp-1 text-base font-bold text-white transition-colors group-hover:text-primary-gold">
+      <div className="p-3">
+        <h3 className="truncate text-lg font-semibold text-foreground">
           {movie.title}
         </h3>
+        <div className="mt-1 flex items-center gap-1 text-base text-muted-foreground">
+          <Star size={12} className="fill-accent-gold text-accent-gold" />
+          <span>
+            {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+          </span>
+        </div>
       </div>
     </Link>
   );

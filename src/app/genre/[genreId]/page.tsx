@@ -5,12 +5,12 @@ import { getMoviesByGenre } from "@/lib/api/tmdb";
 
 interface GenrePageProps {
   params: Promise<{ genreId: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
-export default async function GenreDynamicPage({ params }: GenrePageProps) {
-  const { genreId: segment } = await params;
-
-  // Resolve whether user passed a numeric ID (e.g. "28") or a slug name (e.g. "action")
+export default async function GenrePage({ params, searchParams }: GenrePageProps) {
+  const [{ genreId: segment }, query] = await Promise.all([params, searchParams]);
+  const page = Math.max(1, Number(query.page) || 1);
   const genre = /^\d+$/.test(segment)
     ? getGenreById(Number(segment))
     : getGenreBySlug(segment);
@@ -19,9 +19,6 @@ export default async function GenreDynamicPage({ params }: GenrePageProps) {
     notFound();
   }
 
-  // Fetch movies belonging to the resolved genre ID
-  const response = await getMoviesByGenre(genre.id);
-  const movies = response?.results ?? [];
-
-  return <GenreListComponent genre={genre} movies={movies} />;
+  const { results, totalPages } = await getMoviesByGenre(genre.id, page);
+  return <GenreListComponent genre={genre} movies={results} totalPages={totalPages} />;
 }

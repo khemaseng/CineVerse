@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import {
-  getTrendingMovies,
   getNowPlayingMovies,
   getTopRatedMovies,
+  getTrendingMovies,
   getUpcomingMovies,
 } from "@/lib/api/tmdb";
 import { HeroBannerComponent } from "@/components/landing/HeroBannerComponent";
@@ -16,34 +16,17 @@ import { CoverFlowCarouselComponent } from "@/components/landing/CoverFlowCarous
 export const metadata: Metadata = {
   title: "Home | CineVerse",
   description:
-    "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
-  openGraph: {
-    title: "Home | CineVerse",
-    description:
-      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing.",
-    url: "/",
-    siteName: "CineVerse",
-    images: [
-      {
-        url: "/opengraph-fix.png",
-        width: 1200,
-        height: 630,
-        alt: "CineVerse Movie Platform",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Home | CineVerse",
-    description:
-      "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing.",
-    images: ["/opengraph-fix.png"],
-  },
+    "Discover movies, explore stories, find new favorites, and experience the magic behind every film with CineVerse.",
 };
 
-export default async function LandingPage() {
+interface LandingPageProps {
+  searchParams: Promise<{ nowPlayingPage?: string; trendingPage?: string }>;
+}
+
+export default async function LandingPage({ searchParams }: LandingPageProps) {
+  const params = await searchParams;
+  const nowPlayingPage = Math.max(1, Number(params.nowPlayingPage) || 1);
+  const trendingPage = Math.max(1, Number(params.trendingPage) || 1);
   const [trendingData, nowPlayingData, topRatedData, upcomingData] =
     await Promise.all([
       getTrendingMovies("day"),
@@ -52,43 +35,26 @@ export default async function LandingPage() {
       getUpcomingMovies(),
     ]);
 
-  // Top 5 movies for the full-screen hero carousel
-  const heroMovies = trendingData?.results?.slice(0, 5) || [];
-
-  // Spotlight 1: Top Rated pick (Card on LEFT)
-  const spotlightLeftMovie =
-    topRatedData?.results?.[0] || trendingData?.results?.[5];
-
-  // Spotlight 2: Upcoming premiere (Card on RIGHT)
-  const spotlightRightMovie =
-    upcomingData?.results?.[0] || topRatedData?.results?.[1];
+  const trendingMovies = trendingData?.results || [];
+  const topRatedMovies = topRatedData?.results || [];
+  const upcomingMovies = upcomingData?.results || [];
 
   return (
     <main className="min-h-screen pb-16">
-      {/* 1. Full-Height Hero Banner */}
-      <HeroBannerComponent movies={heroMovies} />
-
-      {/* 2. Quick Genre Filter Pills */}
+      <HeroBannerComponent movies={trendingMovies.slice(0, 5)} />
       <GenresShowcaseComponent />
-
-      {/* 3. Now Playing In Theaters (4 Cards) */}
-      <FeaturedMoviesComponent movies={nowPlayingData?.results || []} />
-
-      {/* 4. Cinematic Spotlight 1 (Card on the LEFT) */}
+      <FeaturedMoviesComponent
+        movies={nowPlayingData?.results || []}
+        page={nowPlayingPage}
+      />
       <CinematicSpotlightComponent
-        movie={spotlightLeftMovie}
+        movie={topRatedMovies[0] || trendingMovies[5]}
         badgeText="PREMIERE SPOTLIGHT"
         layout="left"
       />
-
-      {/* 5. Trending Collection (4 Cards) */}
-      <TrendingPreviewComponent movies={trendingData?.results || []} />
-
-      {/* 6. CoverFlowCarousel */}
-      <CoverFlowCarouselComponent movies={upcomingData?.results || []} />
-
-      {/* 7. Upcoming Releases (4 Cards) */}
-      <UpcomingMoviesComponent movies={upcomingData?.results || []} />
+      <TrendingPreviewComponent movies={trendingMovies} page={trendingPage} />
+      <CoverFlowCarouselComponent movies={upcomingMovies} />
+      <UpcomingMoviesComponent movies={upcomingMovies} />
     </main>
   );
 }

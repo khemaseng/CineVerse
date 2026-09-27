@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
   totalPages: number;
+  paramName?: string;
 }
 
-export default function Pagination({ totalPages }: PaginationProps) {
+export default function Pagination({
+  totalPages,
+  paramName = "page",
+}: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -16,12 +20,15 @@ export default function Pagination({ totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
   // Get current page from URL, defaulting to 1
-  const currentPage = Math.max(1, Math.min(Number(searchParams.get('page')) || 1, totalPages));
+  const currentPage = Math.max(
+    1,
+    Math.min(Number(searchParams.get(paramName)) || 1, totalPages),
+  );
 
   // Helper to construct the new URL with updated search params
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', pageNumber.toString());
+    params.set(paramName, pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
 
@@ -41,7 +48,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
       const end = Math.min(totalPages - 1, currentPage + 1);
 
       if (start > 2) {
-        pages.push('...');
+        pages.push("...");
       }
 
       for (let i = start; i <= end; i++) {
@@ -49,7 +56,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
       }
 
       if (end < totalPages - 1) {
-        pages.push('...');
+        pages.push("...");
       }
 
       pages.push(totalPages);
@@ -59,14 +66,17 @@ export default function Pagination({ totalPages }: PaginationProps) {
   };
 
   return (
-    <nav aria-label="Pagination Navigation" className="flex flex-wrap items-center justify-center gap-2 mt-10">
+    <nav
+      aria-label="Pagination Navigation"
+      className="flex flex-wrap items-center justify-center gap-2 mt-10"
+    >
       {/* Previous Button */}
       <Link
         href={createPageURL(currentPage - 1)}
-        className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-lg border border-border transition-all ${
+        className={`flex items-center gap-1 px-3 py-2 text-base font-semibold rounded-lg border border-border transition-all ${
           currentPage <= 1
-            ? 'pointer-events-none opacity-40 bg-muted/20 text-muted-foreground'
-            : 'bg-muted/40 text-foreground hover:bg-primary-gold hover:text-navy-blue shadow-sm'
+            ? "pointer-events-none opacity-40 bg-muted/20 text-muted-foreground"
+            : "bg-muted/40 text-foreground hover:bg-primary-gold hover:text-navy-blue shadow-sm"
         }`}
         aria-disabled={currentPage <= 1}
       >
@@ -77,11 +87,11 @@ export default function Pagination({ totalPages }: PaginationProps) {
       {/* Page Numbers */}
       <div className="flex items-center gap-1">
         {getPageNumbers().map((page, index) => {
-          if (page === '...') {
+          if (page === "...") {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-2 py-1 text-xs text-muted-foreground select-none"
+                className="px-2 py-1 text-base text-muted-foreground select-none"
               >
                 ...
               </span>
@@ -93,12 +103,12 @@ export default function Pagination({ totalPages }: PaginationProps) {
             <Link
               key={`page-${page}`}
               href={createPageURL(page)}
-              className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-bold transition-all ${
+              className={`flex h-9 w-9 items-center justify-center rounded-lg text-base font-bold transition-all ${
                 isCurrent
-                  ? 'bg-primary-gold text-navy-blue shadow-md'
-                  : 'border border-border bg-muted/30 text-foreground hover:bg-muted hover:border-primary-gold/50'
+                  ? "bg-primary-gold text-navy-blue shadow-md"
+                  : "border border-border bg-muted/30 text-foreground hover:bg-muted hover:border-primary-gold/50"
               }`}
-              aria-current={isCurrent ? 'page' : undefined}
+              aria-current={isCurrent ? "page" : undefined}
             >
               {page}
             </Link>
@@ -109,10 +119,10 @@ export default function Pagination({ totalPages }: PaginationProps) {
       {/* Next Button */}
       <Link
         href={createPageURL(currentPage + 1)}
-        className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-lg border border-border transition-all ${
+        className={`flex items-center gap-1 px-3 py-2 text-base font-semibold rounded-lg border border-border transition-all ${
           currentPage >= totalPages
-            ? 'pointer-events-none opacity-40 bg-muted/20 text-muted-foreground'
-            : 'bg-muted/40 text-foreground hover:bg-primary-gold hover:text-navy-blue shadow-sm'
+            ? "pointer-events-none opacity-40 bg-muted/20 text-muted-foreground"
+            : "bg-muted/40 text-foreground hover:bg-primary-gold hover:text-navy-blue shadow-sm"
         }`}
         aria-disabled={currentPage >= totalPages}
       >

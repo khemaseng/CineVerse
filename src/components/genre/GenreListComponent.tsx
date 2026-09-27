@@ -1,28 +1,33 @@
 import { MovieCardListComponent } from "@/components/movies/MovieCardListComponent";
 import type { Genre } from "@/lib/api/genres";
 import type { Movie } from "@/lib/api/types/movie";
+import Pagination from "@/components/pagination";
 
 interface GenreListComponentProps {
   genre: Genre;
   movies: Movie[];
+  totalPages: number;
 }
 
-export function GenreListComponent({ genre, movies }: GenreListComponentProps) {
+export function GenreListComponent({
+  genre,
+  movies,
+  totalPages,
+}: GenreListComponentProps) {
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <header className="mb-8">
-          <p className="text-sm font-medium text-amber-500 dark:text-amber-400">
-            Movie genre
-          </p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#041226] transition-colors dark:text-white sm:text-4xl">
+    <main className="page-container min-h-screen">
+      <div>
+        <header className="page-heading">
+          <p className="!mt-0 font-medium text-primary-gold">Movie genre</p>
+          <h1 className="text-5xl mt-2 font-extrabold tracking-tight text-foreground">
             {genre.name} Movies
           </h1>
-          <p className="mt-2 text-sm text-gray-600 transition-colors dark:text-zinc-400">
+          <p className="text-lg">
             Popular movies in the {genre.name.toLowerCase()} genre.
           </p>
         </header>
         <MovieCardListComponent movies={movies} />
+        <Pagination totalPages={totalPages} />
       </div>
     </main>
   );

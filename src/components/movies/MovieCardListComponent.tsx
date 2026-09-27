@@ -12,7 +12,7 @@ export function MovieCardListComponent({ movies = [] }: Props) {
         <p className="text-lg font-medium text-muted-foreground">
           No movies found.
         </p>
-        <p className="text-sm text-muted-foreground/60">
+        <p className="text-lg text-muted-foreground/60">
           Try adjusting your search or filters.
         </p>
       </div>
@@ -20,7 +20,7 @@ export function MovieCardListComponent({ movies = [] }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
       {movies.map((movie) => (
         <MovieCardComponent key={movie.id} movie={movie} />
       ))}

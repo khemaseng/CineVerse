@@ -39,12 +39,12 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
   });
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+    <main className="page-container">
+      <div className="page-heading">
+        <h1 className="font-bold text-foreground">
           Explore Movies
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p>
           Browse popular titles, search your favorites, or sort by top ratings.
         </p>
       </div>

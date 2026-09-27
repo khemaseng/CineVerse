@@ -2,22 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { 
-  GraduationCap, 
-  User, 
-  Users, 
-  Check, 
-  Play, 
-  Tv, 
-  Star, 
-  Download, 
+import {
+  GraduationCap,
+  User,
+  Users,
+  Check,
+  Play,
+  Tv,
+  Star,
+  Download,
   Crown,
   CreditCard,
   ShieldCheck,
   X,
   Lock,
   QrCode,
-  Wallet
+  Wallet,
 } from "lucide-react";
 import { toast } from "sonner";
 import { auth } from "@/components/Firebase/firebase";
@@ -55,7 +55,8 @@ const PLANS: Plan[] = [
       "Student-only discounts",
     ],
     buttonVariant: "outline",
-    cardStyles: "bg-white/90 dark:bg-[#08192d]/80 border-slate-200 dark:border-slate-800 hover:border-primary-gold/50 dark:hover:border-primary-gold/50 shadow-sm hover:shadow-md",
+    cardStyles:
+      "bg-white/90 dark:bg-[#08192d]/80 border-slate-200 dark:border-slate-800 hover:border-primary-gold/50 dark:hover:border-primary-gold/50 shadow-sm hover:shadow-md",
   },
   {
     id: "individual",
@@ -75,7 +76,8 @@ const PLANS: Plan[] = [
     isPopular: true,
     badgeText: "MOST POPULAR",
     buttonVariant: "primary",
-    cardStyles: "bg-gradient-to-b from-primary-gold/10 via-white to-white dark:from-primary-gold/15 dark:via-[#08192d]/95 dark:to-[#041226] border-2 border-primary-gold shadow-[0_0_35px_rgba(243,168,18,0.25)]",
+    cardStyles:
+      "bg-gradient-to-b from-primary-gold/10 via-white to-white dark:from-primary-gold/15 dark:via-[#08192d]/95 dark:to-[#041226] border-2 border-primary-gold shadow-[0_0_35px_rgba(243,168,18,0.25)]",
   },
   {
     id: "family",
@@ -94,7 +96,8 @@ const PLANS: Plan[] = [
       "Watch on multiple devices",
     ],
     buttonVariant: "outline",
-    cardStyles: "bg-white/90 dark:bg-[#08192d]/80 border-slate-200 dark:border-slate-800 hover:border-accent-blue/50 dark:hover:border-accent-blue/50 shadow-sm hover:shadow-md",
+    cardStyles:
+      "bg-white/90 dark:bg-[#08192d]/80 border-slate-200 dark:border-slate-800 hover:border-accent-blue/50 dark:hover:border-accent-blue/50 shadow-sm hover:shadow-md",
   },
 ];
 
@@ -128,11 +131,13 @@ export function ExplorePremiumComponent() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
-  
+
   // Checkout Modal State
   const [activePlan, setActivePlan] = useState<Plan | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "khqr" | "paypal">("card");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "card" | "khqr" | "paypal"
+  >("card");
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Card form state
@@ -171,7 +176,7 @@ export function ExplorePremiumComponent() {
     if (!activePlan) return;
 
     setIsProcessing(true);
-    
+
     // Simulate payment processing delay
     setTimeout(() => {
       setIsProcessing(false);
@@ -190,32 +195,34 @@ export function ExplorePremiumComponent() {
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-blue/10 blur-3xl pointer-events-none rounded-full" />
 
       {/* Grid Overlay Effect */}
-      <div 
-        className="absolute inset-0 bg-[linear-gradient(to_right,#082c5908_1px,transparent_1px),linear-gradient(to_bottom,#082c5908_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" 
-      />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#082c5908_1px,transparent_1px),linear-gradient(to_bottom,#082c5908_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto z-10 space-y-12">
         {/* Hero Title Header */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="inline-block px-3.5 py-1 rounded-full bg-primary-gold/10 border border-primary-gold/20">
-            <p className="text-xs uppercase font-bold tracking-[0.25em] text-primary-gold">
+            <p className="text-base uppercase font-bold tracking-[0.25em] text-primary-gold">
               Premium Experience
             </p>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-navy-blue dark:text-white">
-            Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-amber-400 to-amber-500">Premium</span>
+            Explore{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-amber-400 to-amber-500">
+              Premium
+            </span>
           </h1>
-          <p className="text-navy-blue/70 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Choose the plan that fits your account and unlock a better movie experience.
+          <p className="text-navy-blue/70 dark:text-slate-400 text-lg sm:text-base leading-relaxed">
+            Choose the plan that fits your account and unlock a better movie
+            experience.
           </p>
         </div>
 
         {/* Feature Highlights Row */}
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-2 pb-4">
           {HIGHLIGHTS.map((item, index) => (
-            <div 
+            <div
               key={index}
-              className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/90 dark:bg-[#08192d]/80 border border-slate-200 dark:border-slate-800/80 backdrop-blur-md text-xs sm:text-sm text-navy-blue dark:text-slate-300 shadow-sm hover:border-primary-gold/40 dark:hover:border-primary-gold/40 transition"
+              className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/90 dark:bg-[#08192d]/80 border border-slate-200 dark:border-slate-800/80 backdrop-blur-md text-base sm:text-lg text-navy-blue dark:text-slate-300 shadow-sm hover:border-primary-gold/40 dark:hover:border-primary-gold/40 transition"
             >
               <div className="p-1 rounded-full bg-primary-gold/15 flex items-center justify-center">
                 {item.icon}
@@ -234,15 +241,13 @@ export function ExplorePremiumComponent() {
                 className={`relative rounded-2xl p-8 transition-all duration-300 flex flex-col justify-between ${
                   plan.cardStyles
                 } backdrop-blur-xl ${
-                  plan.isPopular 
-                    ? "md:-translate-y-2" 
-                    : ""
+                  plan.isPopular ? "md:-translate-y-2" : ""
                 }`}
               >
                 {/* Popular Floating Badge */}
                 {plan.isPopular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-gold text-navy-blue text-[11px] font-extrabold tracking-wider uppercase shadow-[0_0_20px_rgba(243,168,18,0.5)]">
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-gold text-navy-blue text-[18px] font-extrabold tracking-wider uppercase shadow-[0_0_20px_rgba(243,168,18,0.5)]">
                       <Crown className="w-3.5 h-3.5 fill-navy-blue" />
                       {plan.badgeText}
                     </span>
@@ -257,10 +262,10 @@ export function ExplorePremiumComponent() {
 
                   {/* Plan Name & Subtitle */}
                   <div>
-                    <h3 className="text-xl font-extrabold tracking-wide text-navy-blue dark:text-white uppercase">
+                    <h3 className="text-4xl font-extrabold tracking-wide text-navy-blue dark:text-white uppercase">
                       {plan.name}
                     </h3>
-                    <p className="text-xs text-navy-blue/70 dark:text-slate-400 mt-1 font-medium">
+                    <p className="text-base text-navy-blue/70 dark:text-slate-400 mt-1 font-medium">
                       {plan.subtitle}
                     </p>
                   </div>
@@ -270,7 +275,7 @@ export function ExplorePremiumComponent() {
                     <span className="text-4xl font-extrabold tracking-tight text-navy-blue dark:text-white">
                       {plan.price}
                     </span>
-                    <span className="text-sm font-medium text-navy-blue/60 dark:text-slate-400">
+                    <span className="text-lg font-medium text-navy-blue/60 dark:text-slate-400">
                       {plan.period}
                     </span>
                   </div>
@@ -279,11 +284,13 @@ export function ExplorePremiumComponent() {
                   <div className="h-px w-full bg-slate-200 dark:bg-slate-800/80" />
 
                   {/* Features List */}
-                  <ul className="space-y-3.5 text-sm text-navy-blue/90 dark:text-slate-300">
+                  <ul className="space-y-3.5 text-lg text-navy-blue/90 dark:text-slate-300">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-3">
                         <Check className="h-4 w-4 text-primary-gold shrink-0 font-bold" />
-                        <span className="leading-snug font-medium">{feature}</span>
+                        <span className="leading-snug font-medium">
+                          {feature}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -294,16 +301,18 @@ export function ExplorePremiumComponent() {
                   {plan.buttonVariant === "primary" ? (
                     <button
                       onClick={() => handleSelectPlan(plan)}
-                      className="w-full py-3 px-6 rounded-xl bg-primary-gold hover:bg-primary-dark text-navy-blue font-extrabold text-sm shadow-[0_0_25px_rgba(243,168,18,0.4)] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                      disabled={loadingAuth}
+                      className="w-full py-3 px-6 rounded-xl bg-primary-gold hover:bg-primary-dark text-navy-blue font-extrabold text-lg shadow-[0_0_25px_rgba(243,168,18,0.4)] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                     >
-                      Choose Plan
+                      {loadingAuth ? "Checking account…" : "Choose Plan"}
                     </button>
                   ) : (
                     <button
                       onClick={() => handleSelectPlan(plan)}
-                      className="w-full py-3 px-6 rounded-xl border border-navy-blue/20 dark:border-slate-700/80 hover:border-primary-gold dark:hover:border-primary-gold bg-white/80 dark:bg-slate-900/60 hover:bg-primary-gold/10 text-navy-blue dark:text-white hover:text-navy-blue dark:hover:text-primary-gold font-bold text-sm transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-sm"
+                      disabled={loadingAuth}
+                      className="w-full py-3 px-6 rounded-xl border border-navy-blue/20 dark:border-slate-700/80 hover:border-primary-gold dark:hover:border-primary-gold bg-white/80 dark:bg-slate-900/60 hover:bg-primary-gold/10 text-navy-blue dark:text-white hover:text-navy-blue dark:hover:text-primary-gold font-bold text-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-sm"
                     >
-                      Choose Plan
+                      {loadingAuth ? "Checking account…" : "Choose Plan"}
                     </button>
                   )}
                 </div>
@@ -314,16 +323,16 @@ export function ExplorePremiumComponent() {
 
         {/* Social Proof Stats Footer */}
         <div className="pt-12 text-center space-y-6">
-          <p className="text-xs uppercase tracking-widest text-navy-blue/70 dark:text-slate-400 font-bold">
+          <p className="text-base uppercase tracking-widest text-navy-blue/70 dark:text-slate-400 font-bold">
             Trusted by movie lovers everywhere
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto pt-2">
             {STATS.map((stat, idx) => (
               <div key={idx} className="space-y-1">
-                <div className="text-2xl sm:text-3xl font-extrabold text-navy-blue dark:text-white">
+                <div className="text-4xl sm:text-3xl font-extrabold text-navy-blue dark:text-white">
                   {stat.value}
                 </div>
-                <div className="text-xs text-navy-blue/70 dark:text-slate-400 font-medium">
+                <div className="text-base text-navy-blue/70 dark:text-slate-400 font-medium">
                   {stat.label}
                 </div>
               </div>
@@ -336,9 +345,8 @@ export function ExplorePremiumComponent() {
       {isCheckoutOpen && activePlan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="relative w-full max-w-md bg-white dark:bg-[#08192d] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-6 text-navy-blue dark:text-white space-y-6">
-            
             {/* Close Modal Button */}
-            <button 
+            <button
               onClick={() => setIsCheckoutOpen(false)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-navy-blue dark:hover:text-white rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition"
             >
@@ -347,42 +355,52 @@ export function ExplorePremiumComponent() {
 
             {/* Modal Title Header */}
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary-gold/15 text-primary-gold text-xs font-bold uppercase">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary-gold/15 text-primary-gold text-base font-bold uppercase">
                 <ShieldCheck className="w-3.5 h-3.5" /> Secure Checkout
               </div>
-              <h2 className="text-2xl font-extrabold">Complete Subscription</h2>
-              <p className="text-xs text-navy-blue/70 dark:text-slate-400">
-                You are subscribing to <strong className="text-primary-gold uppercase">{activePlan.name}</strong> Plan.
+              <h2 className="text-4xl font-extrabold">Complete Subscription</h2>
+              <p className="text-base text-navy-blue/70 dark:text-slate-400">
+                You are subscribing to{" "}
+                <strong className="text-primary-gold uppercase">
+                  {activePlan.name}
+                </strong>{" "}
+                Plan.
               </p>
             </div>
 
             {/* Order Summary Box */}
-            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#041226]/80 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
-              <div className="flex justify-between items-center text-sm font-bold">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#041226]/80 border border-slate-200 dark:border-slate-800 space-y-2 text-base">
+              <div className="flex justify-between items-center text-lg font-bold">
                 <span>{activePlan.name} Plan</span>
-                <span className="text-primary-gold">{activePlan.price} / mo</span>
+                <span className="text-primary-gold">
+                  {activePlan.price} / mo
+                </span>
               </div>
               <div className="flex justify-between text-navy-blue/70 dark:text-slate-400">
                 <span>Billing Frequency</span>
                 <span>Monthly Recurring</span>
               </div>
               <div className="h-px bg-slate-200 dark:bg-slate-800 my-2" />
-              <div className="flex justify-between text-sm font-extrabold text-navy-blue dark:text-white pt-1">
+              <div className="flex justify-between text-lg font-extrabold text-navy-blue dark:text-white pt-1">
                 <span>Total Due Today</span>
-                <span className="text-base text-primary-gold">{activePlan.price}</span>
+                <span className="text-base text-primary-gold">
+                  {activePlan.price}
+                </span>
               </div>
             </div>
 
             {/* Payment Method Selector */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-navy-blue/80 dark:text-slate-300">Select Payment Method</label>
+              <label className="text-base font-bold text-navy-blue/80 dark:text-slate-300">
+                Select Payment Method
+              </label>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("card")}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-semibold gap-1.5 transition ${
-                    paymentMethod === "card" 
-                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold" 
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-base font-semibold gap-1.5 transition ${
+                    paymentMethod === "card"
+                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold"
                       : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                   }`}
                 >
@@ -392,9 +410,9 @@ export function ExplorePremiumComponent() {
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("khqr")}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-semibold gap-1.5 transition ${
-                    paymentMethod === "khqr" 
-                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold" 
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-base font-semibold gap-1.5 transition ${
+                    paymentMethod === "khqr"
+                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold"
                       : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                   }`}
                 >
@@ -404,9 +422,9 @@ export function ExplorePremiumComponent() {
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("paypal")}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-semibold gap-1.5 transition ${
-                    paymentMethod === "paypal" 
-                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold" 
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border text-base font-semibold gap-1.5 transition ${
+                    paymentMethod === "paypal"
+                      ? "border-primary-gold bg-primary-gold/10 text-primary-gold"
                       : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                   }`}
                 >
@@ -421,48 +439,56 @@ export function ExplorePremiumComponent() {
               {paymentMethod === "card" && (
                 <div className="space-y-3">
                   <div>
-                    <label className="text-xs font-semibold text-navy-blue/70 dark:text-slate-400">Cardholder Name</label>
-                    <input 
+                    <label className="text-base font-semibold text-navy-blue/70 dark:text-slate-400">
+                      Cardholder Name
+                    </label>
+                    <input
                       type="text"
                       required
                       placeholder="John Doe"
                       value={cardName}
                       onChange={(e) => setCardName(e.target.value)}
-                      className="mt-1 w-full h-10 px-3 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
+                      className="mt-1 w-full h-10 px-3 text-base rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-navy-blue/70 dark:text-slate-400">Card Number</label>
-                    <input 
+                    <label className="text-base font-semibold text-navy-blue/70 dark:text-slate-400">
+                      Card Number
+                    </label>
+                    <input
                       type="text"
                       required
                       placeholder="4111 2222 3333 4444"
                       value={cardNumber}
                       onChange={(e) => setCardNumber(e.target.value)}
-                      className="mt-1 w-full h-10 px-3 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
+                      className="mt-1 w-full h-10 px-3 text-base rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-xs font-semibold text-navy-blue/70 dark:text-slate-400">Expiry</label>
-                      <input 
+                      <label className="text-base font-semibold text-navy-blue/70 dark:text-slate-400">
+                        Expiry
+                      </label>
+                      <input
                         type="text"
                         required
                         placeholder="MM/YY"
                         value={cardExpiry}
                         onChange={(e) => setCardExpiry(e.target.value)}
-                        className="mt-1 w-full h-10 px-3 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
+                        className="mt-1 w-full h-10 px-3 text-base rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-navy-blue/70 dark:text-slate-400">CVC</label>
-                      <input 
+                      <label className="text-base font-semibold text-navy-blue/70 dark:text-slate-400">
+                        CVC
+                      </label>
+                      <input
                         type="password"
                         required
                         placeholder="123"
                         value={cardCvc}
                         onChange={(e) => setCardCvc(e.target.value)}
-                        className="mt-1 w-full h-10 px-3 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
+                        className="mt-1 w-full h-10 px-3 text-base rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#041226] focus:outline-none focus:ring-2 focus:ring-primary-gold"
                       />
                     </div>
                   </div>
@@ -472,26 +498,35 @@ export function ExplorePremiumComponent() {
               {paymentMethod === "khqr" && (
                 <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center space-y-2 bg-white dark:bg-[#041226]">
                   <QrCode className="w-16 h-16 mx-auto text-primary-gold animate-pulse" />
-                  <p className="text-xs font-bold">Scan KHQR to Pay</p>
-                  <p className="text-[11px] text-navy-blue/70 dark:text-slate-400">Open your ABA Mobile or Mobile Banking app to scan.</p>
+                  <p className="text-base font-bold">Scan KHQR to Pay</p>
+                  <p className="text-[18px] text-navy-blue/70 dark:text-slate-400">
+                    Open your ABA Mobile or Mobile Banking app to scan.
+                  </p>
                 </div>
               )}
 
               {paymentMethod === "paypal" && (
                 <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center space-y-2 bg-white dark:bg-[#041226]">
                   <Wallet className="w-10 h-10 mx-auto text-sky-500" />
-                  <p className="text-xs font-bold">Express Checkout with PayPal</p>
-                  <p className="text-[11px] text-navy-blue/70 dark:text-slate-400">You will be securely redirected to PayPal to authorize payment.</p>
+                  <p className="text-base font-bold">
+                    Express Checkout with PayPal
+                  </p>
+                  <p className="text-[18px] text-navy-blue/70 dark:text-slate-400">
+                    You will be securely redirected to PayPal to authorize
+                    payment.
+                  </p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="w-full py-3 px-4 rounded-xl bg-primary-gold hover:bg-primary-dark text-navy-blue font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-primary-gold hover:bg-primary-dark text-navy-blue font-extrabold text-lg shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
               >
                 <Lock className="w-4 h-4" />
-                {isProcessing ? "Processing Payment..." : `Pay ${activePlan.price} / month`}
+                {isProcessing
+                  ? "Processing Payment..."
+                  : `Pay ${activePlan.price} / month`}
               </button>
             </form>
           </div>

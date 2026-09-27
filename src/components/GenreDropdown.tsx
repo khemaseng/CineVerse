@@ -8,7 +8,7 @@ export default function GenreDropdown() {
     <div className="group relative">
       <button
         type="button"
-        className="flex items-center gap-1.5 py-2 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
+        className="flex items-center gap-1.5 py-2 text-lg font-medium text-zinc-300 transition-colors hover:text-white"
         aria-haspopup="true"
       >
         Genres
@@ -33,7 +33,7 @@ export default function GenreDropdown() {
             <Link
               key={genre.id}
               href={`/genre/${genre.id}`}
-              className="rounded-lg px-3 py-2 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
+              className="rounded-lg px-3 py-2 text-base font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
             >
               {genre.name}
             </Link>

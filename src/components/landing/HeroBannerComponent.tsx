@@ -28,8 +28,8 @@ export function HeroBannerComponent({ movies }: HeroBannerProps) {
   const currentMovie = movies[currentIndex];
 
   return (
-    <div className="relative h-screen min-h-[700px] w-full overflow-hidden bg-[#041226] font-sans">
-      {/* Background Image with Cinematic Dark Blue Gradient Vignette */}
+    <div className="relative h-[76svh] min-h-[460px] max-h-[780px] w-full overflow-hidden bg-background sm:h-[80svh]">
+      {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0">
         <Image
           key={currentMovie.id}
@@ -49,7 +49,7 @@ export function HeroBannerComponent({ movies }: HeroBannerProps) {
       <button
         type="button"
         onClick={handlePrev}
-        className="absolute left-6 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary-gold/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-primary-gold hover:bg-primary-gold hover:text-navy-blue"
+        className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all hover:bg-primary-red hover:border-primary-red hover:scale-110 sm:left-4 sm:h-11 sm:w-11"
         aria-label="Previous Slide"
       >
         <ChevronLeft size={26} />
@@ -58,33 +58,28 @@ export function HeroBannerComponent({ movies }: HeroBannerProps) {
       <button
         type="button"
         onClick={handleNext}
-        className="absolute right-6 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary-gold/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-primary-gold hover:bg-primary-gold hover:text-navy-blue"
+        className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all hover:bg-primary-red hover:border-primary-red hover:scale-110 sm:right-4 sm:h-11 sm:w-11"
         aria-label="Next Slide"
       >
         <ChevronRight size={26} />
       </button>
 
-      {/* Vertically Centered Banner Content */}
-      <div className="relative z-20 mx-auto flex h-full max-w-7xl items-center px-8 lg:px-12">
-        <div className="max-w-3xl space-y-6 pt-16">
-          {/* Rating Badge & Premiere Date */}
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-primary-gold/30 bg-black/60 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-gold backdrop-blur-md">
-              <Star size={14} className="fill-primary-gold text-primary-gold" />
-              <span>{currentMovie.vote_average?.toFixed(1) || "N/A"} RATING</span>
-            </div>
-            <span className="text-xs font-semibold tracking-wider uppercase text-white/70">
-              • Release {currentMovie.release_date?.slice(0, 4) || "New"}
-            </span>
+      {/* Banner Content */}
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-12 pb-20 sm:px-16 sm:pb-24 lg:px-6">
+        <div className="max-w-2xl space-y-4">
+          {/* Rating Badge */}
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-black/40 px-3 py-1 text-base font-bold text-amber-400 backdrop-blur-md">
+            <Star size={14} className="fill-amber-400" />
+            <span>{currentMovie.vote_average?.toFixed(1) || "N/A"} RATING</span>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl font-black tracking-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
             {currentMovie.title}
           </h1>
 
-          {/* Overview */}
-          <p className="line-clamp-3 max-w-2xl text-base font-normal leading-relaxed text-gray-200 drop-shadow md:text-lg">
+          {/* Description */}
+          <p className="line-clamp-3 text-lg text-gray-300 sm:text-base">
             {currentMovie.overview}
           </p>
 
@@ -92,7 +87,7 @@ export function HeroBannerComponent({ movies }: HeroBannerProps) {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
               href={`/movies/${currentMovie.id}`}
-              className="inline-flex items-center gap-2.5 rounded-xl bg-primary-gold px-7 py-3.5 text-sm font-bold text-navy-blue shadow-xl transition-all duration-300 hover:border hover:border-primary-gold hover:bg-navy-blue hover:text-primary-gold"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary-red px-6 py-3 text-lg font-semibold text-white transition-opacity hover:opacity-90"
             >
               <Play size={18} className="fill-current" />
               Watch Details

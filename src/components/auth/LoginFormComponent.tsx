@@ -88,13 +88,17 @@ export function LoginFormComponent() {
   };
 
   return (
-    <div className="space-y-2.5">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2" noValidate>
+    <div className="space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-3.5"
+        noValidate
+      >
         {/* Email Address */}
         <div>
           <label
             htmlFor="email"
-            className="mb-0.5 flex items-center gap-1 text-[11px] font-semibold text-slate-700"
+            className="text-base font-semibold text-foreground flex items-center gap-1"
           >
             <span>Email</span>
             <span className="text-red-500">*</span>
@@ -110,7 +114,7 @@ export function LoginFormComponent() {
               autoComplete="email"
               placeholder="name@example.com"
               {...register("email")}
-              className={`h-9 w-full rounded-lg border bg-slate-50/50 pl-9 pr-3 text-xs font-medium text-slate-800 placeholder:text-slate-400 transition-all focus:bg-white focus:outline-none ${
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-3.5 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.email
                   ? "border-red-500 focus:border-red-500"
                   : "border-slate-200 focus:border-slate-400"
@@ -118,7 +122,7 @@ export function LoginFormComponent() {
             />
           </div>
           {errors.email && (
-            <p className="mt-0.5 text-[10px] font-medium text-red-500">
+            <p className="text-base font-medium text-red-500">
               {errors.email.message}
             </p>
           )}
@@ -128,7 +132,7 @@ export function LoginFormComponent() {
         <div>
           <label
             htmlFor="password"
-            className="mb-0.5 flex items-center gap-1 text-[11px] font-semibold text-slate-700"
+            className="text-base font-semibold text-foreground flex items-center gap-1"
           >
             <span>Password</span>
             <span className="text-red-500">*</span>
@@ -144,7 +148,7 @@ export function LoginFormComponent() {
               autoComplete="current-password"
               placeholder="••••••••"
               {...register("password")}
-              className={`h-9 w-full rounded-lg border bg-slate-50/50 pl-9 pr-9 text-xs font-medium text-slate-800 placeholder:text-slate-400 transition-all focus:bg-white focus:outline-none ${
+              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-11 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.password
                   ? "border-red-500 focus:border-red-500"
                   : "border-slate-200 focus:border-slate-400"
@@ -160,7 +164,7 @@ export function LoginFormComponent() {
             </button>
           </div>
           {errors.password && (
-            <p className="mt-0.5 text-[10px] font-medium text-red-500">
+            <p className="text-base font-medium text-red-500">
               {errors.password.message}
             </p>
           )}
@@ -178,7 +182,7 @@ export function LoginFormComponent() {
             />
             <label
               htmlFor="remember"
-              className="text-[11px] text-slate-500 select-none cursor-pointer"
+              className="text-base text-muted-foreground select-none cursor-pointer"
             >
               Remember me
             </label>
@@ -186,7 +190,7 @@ export function LoginFormComponent() {
 
           <Link
             href="/auth/forgot-password"
-            className="text-[11px] font-semibold text-navy-blue hover:underline"
+            className="text-base font-semibold text-navy-blue dark:text-primary-gold hover:underline"
           >
             Forgot password?
           </Link>
@@ -196,7 +200,7 @@ export function LoginFormComponent() {
         <button
           type="submit"
           disabled={isSubmitting || Boolean(socialLoading)}
-          className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-navy-blue text-white text-xs font-bold shadow-md shadow-navy-blue/10 transition-all hover:bg-navy-blue/90 active:scale-[0.99] disabled:opacity-60 mt-1"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-blue text-white font-bold shadow-md shadow-navy-blue/20 transition-all hover:bg-navy-blue/90 hover:shadow-lg active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 text-lg mt-2"
         >
           {isSubmitting ? (
             <>
@@ -210,9 +214,9 @@ export function LoginFormComponent() {
       </form>
 
       {/* Divider */}
-      <div className="my-2 flex items-center justify-center gap-3">
-        <div className="h-[1px] flex-1 bg-slate-200" />
-        <span className="text-[10px] font-medium text-slate-400">
+      <div className="my-5 flex items-center justify-center gap-4">
+        <div className="h-[1px] flex-1 bg-border/80" />
+        <span className="text-base font-medium text-muted-foreground/80 whitespace-nowrap">
           or sign in with
         </span>
         <div className="h-[1px] flex-1 bg-slate-200" />
@@ -224,7 +228,7 @@ export function LoginFormComponent() {
           type="button"
           onClick={handleGoogleLogin}
           disabled={Boolean(socialLoading) || isSubmitting}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-95 disabled:opacity-50"
+          className="flex h-12 items-center justify-center gap-2.5 rounded-2xl border border-border bg-card px-4 text-lg font-semibold text-foreground shadow-sm transition-all hover:bg-muted/50 hover:border-navy-blue/40 active:scale-98 disabled:opacity-50"
         >
           {socialLoading === "google" ? (
             <Loader2 size={14} className="animate-spin" />
@@ -255,7 +259,7 @@ export function LoginFormComponent() {
           type="button"
           onClick={handleGithubLogin}
           disabled={Boolean(socialLoading) || isSubmitting}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-95 disabled:opacity-50"
+          className="flex h-12 items-center justify-center gap-2.5 rounded-2xl border border-border bg-card px-4 text-lg font-semibold text-foreground shadow-sm transition-all hover:bg-muted/50 hover:border-navy-blue/40 active:scale-98 disabled:opacity-50"
         >
           {socialLoading === "github" ? (
             <Loader2 size={14} className="animate-spin" />
@@ -276,7 +280,7 @@ export function LoginFormComponent() {
       </div>
 
       {/* Switch to Register */}
-      <div className="text-center text-[11px] text-slate-500">
+      <div className="text-center text-base text-muted-foreground pt-1">
         Don&apos;t have an account?{" "}
         <Link
           href="/auth/register"
@@ -287,9 +291,9 @@ export function LoginFormComponent() {
       </div>
 
       {/* Footer Legal Links */}
-      <div className="flex items-center justify-center gap-3 pt-1 text-[10px] text-slate-400">
-        <span className="inline-flex items-center gap-1 hover:text-slate-600 cursor-pointer">
-          <FileText size={11} />
+      <div className="flex items-center justify-center gap-4 pt-3 border-t border-border/60 text-[18px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1 hover:text-foreground cursor-pointer">
+          <FileText size={12} />
           Terms
         </span>
         <span>•</span>

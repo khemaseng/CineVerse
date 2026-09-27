@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggleComponent } from "./ThemeToggleComponent";
 import { LogoComponent } from "@/components/brand/LogoComponent";
@@ -17,33 +17,33 @@ const NAV_ITEMS = [
 ];
 
 export function NavbarComponent() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authMenuOpen, setAuthMenuOpen] = useState(false);
 
-  // Close mobile menu whenever the route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+  if (pathname?.startsWith("/auth") || pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
+
+  const closeMenus = () => {
+    setAuthMenuOpen(false);
+    setMobileMenuOpen(false);
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-primary-gold/10 bg-white/90 backdrop-blur-md transition-colors duration-200 dark:bg-[#041226]/90">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        {/* Brand Logo */}
+    <header className="sticky top-0 z-50 w-full border-b border-primary-gold/10 bg-white/80 backdrop-blur-md transition-colors duration-200 dark:bg-[#041226]/80">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
         <LogoComponent size="xs" />
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
+        <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex xl:gap-7">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary-gold ${
-                  isActive
-                    ? "font-semibold text-primary-gold"
-                    : "text-navy-blue/80 dark:text-white/80"
-                }`}
+                aria-current={isActive ? "page" : undefined}
+                className={`whitespace-nowrap text-lg font-medium transition-colors hover:text-primary-gold ${isActive ? "font-semibold text-primary-gold" : "text-navy-blue/80 dark:text-white/80"}`}
               >
                 {item.label}
               </Link>
@@ -51,62 +51,76 @@ export function NavbarComponent() {
           })}
         </nav>
 
-        {/* Right Actions: Theme Toggle + Auth Button + Mobile Hamburger */}
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           <ThemeToggleComponent />
-
-          {/* Desktop "Get Started" Button */}
-          <Link
-            href="/auth/register"
-            className="hidden rounded-lg bg-primary-gold px-4 py-2 text-xs font-semibold text-navy-blue shadow-md transition-all hover:bg-navy-blue hover:text-primary-gold sm:inline-block"
-          >
-            Get Start
-          </Link>
-
-          {/* Mobile Hamburger Toggle Button */}
+          <div className="relative hidden sm:block">
+            <button
+              type="button"
+              aria-expanded={authMenuOpen}
+              aria-controls="desktop-auth-menu"
+              onClick={() => setAuthMenuOpen((open) => !open)}
+              className="rounded-lg bg-primary-gold px-4 py-2 text-lg font-semibold text-navy-blue shadow-md transition-colors hover:bg-amber-300"
+            >
+              Get Started
+            </button>
+            {authMenuOpen && (
+              <div id="desktop-auth-menu" className="absolute right-0 top-full z-50 mt-2 grid min-w-36 gap-1 rounded-xl border border-border bg-background p-2 shadow-xl">
+                <Link href="/auth/login" onClick={closeMenus} className="rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted">Log In</Link>
+                <Link href="/auth/register" onClick={closeMenus} className="rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted">Sign Up</Link>
+              </div>
+            )}
+          </div>
           <button
             type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
-            className="inline-flex items-center justify-center rounded-lg p-2 text-navy-blue transition hover:bg-gray-100 dark:text-white dark:hover:bg-white/10 md:hidden"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            onClick={() => {
+              setMobileMenuOpen((open) => !open);
+              setAuthMenuOpen(false);
+            }}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground lg:hidden"
           >
-            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Responsive Dropdown Drawer */}
-      {isMobileMenuOpen && (
-        <div className="border-b border-primary-gold/15 bg-white/95 px-4 pt-3 pb-6 shadow-xl backdrop-blur-lg transition-all duration-200 dark:bg-[#041226]/95 md:hidden">
-          <nav className="flex flex-col space-y-1">
+      {mobileMenuOpen && (
+        <nav aria-label="Mobile navigation" className="border-t border-border bg-background px-4 py-3 lg:hidden">
+          <div className="mx-auto grid max-w-7xl gap-1 sm:grid-cols-2">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                    isActive
-                      ? "bg-primary-gold/15 font-semibold text-primary-gold"
-                      : "text-navy-blue/80 hover:bg-gray-100 dark:text-white/80 dark:hover:bg-white/5"
-                  }`}
+                  onClick={closeMenus}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded-lg px-3 py-2.5 text-lg font-medium transition-colors hover:bg-muted ${isActive ? "bg-muted text-primary-gold" : "text-foreground"}`}
                 >
                   {item.label}
                 </Link>
               );
             })}
-
-            {/* Mobile Auth Button */}
-            <div className="pt-4">
-              <Link
-                href="/auth/register"
-                className="flex w-full items-center justify-center rounded-lg bg-primary-gold py-2.5 text-sm font-semibold text-navy-blue shadow-md transition-all hover:bg-navy-blue hover:text-primary-gold"
+            <div className="sm:hidden">
+              <button
+                type="button"
+                aria-expanded={authMenuOpen}
+                aria-controls="mobile-auth-menu"
+                onClick={() => setAuthMenuOpen((open) => !open)}
+                className="w-full rounded-lg px-3 py-2.5 text-left text-lg font-semibold text-primary-gold hover:bg-muted"
               >
-                Get Start
-              </Link>
+                Get Started
+              </button>
+              {authMenuOpen && (
+                <div id="mobile-auth-menu" className="ml-3 grid gap-1 border-l border-border pl-3">
+                  <Link href="/auth/login" onClick={closeMenus} className="rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted">Log In</Link>
+                  <Link href="/auth/register" onClick={closeMenus} className="rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted">Sign Up</Link>
+                </div>
+              )}
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       )}
     </header>
   );

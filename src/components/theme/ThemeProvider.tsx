@@ -1,33 +1,66 @@
 "use client";
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
+
 type Theme = "light" | "dark";
 interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
 }
+
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 const STORAGE_KEY = "cineverse-theme";
+const subscribers = new Set<() => void>();
+
+function getThemeSnapshot(): Theme {
+  if (typeof window === "undefined") return "light";
+  const storedTheme = window.localStorage.getItem(STORAGE_KEY);
+  if (storedTheme === "light" || storedTheme === "dark") return storedTheme;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function subscribeToTheme(onChange: () => void) {
+  subscribers.add(onChange);
+  window.addEventListener("storage", onChange);
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", onChange);
+
+  return () => {
+    subscribers.delete(onChange);
+    window.removeEventListener("storage", onChange);
+    mediaQuery.removeEventListener("change", onChange);
+  };
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "light";
+}
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
-  // Runs once on mount: read saved preference, else fall back to system setting.
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(stored ?? (systemPrefersDark ? "dark" : "light"));
-    setMounted(true);
-  }, []);
-
-  // Keeps the <html class="dark"> toggle and localStorage in sync with state.
-  useEffect(() => {
-    if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
-  const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = () => {
+    const nextTheme = getThemeSnapshot() === "dark" ? "light" : "dark";
+    window.localStorage.setItem(STORAGE_KEY, nextTheme);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    subscribers.forEach((subscriber) => subscriber());
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -37,7 +70,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 }
 
 export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used inside <ThemeProvider>");
-  return ctx;
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used inside <ThemeProvider>");
+  return context;
 }

@@ -1,14 +1,14 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export function LoginForm({
   className,
@@ -18,8 +18,8 @@ export function LoginForm({
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
-          <p className="text-sm text-balance text-muted-foreground">
+          <h1 className="text-4xl font-bold">Login to your account</h1>
+          <p className="text-lg text-balance text-muted-foreground">
             Enter your email below to login to your account
           </p>
         </div>
@@ -32,7 +32,7 @@ export function LoginForm({
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <a
               href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
+              className="ml-auto text-lg underline-offset-4 hover:underline"
             >
               Forgot your password?
             </a>
@@ -62,5 +62,5 @@ export function LoginForm({
         </Field>
       </FieldGroup>
     </form>
-  )
+  );
 }

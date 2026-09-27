@@ -1,15 +1,15 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export function SignupForm({
   className,
@@ -22,8 +22,8 @@ export function SignupForm({
           <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Create your account</h1>
-                <p className="text-sm text-balance text-muted-foreground">
+                <h1 className="text-4xl font-bold">Create your account</h1>
+                <p className="text-lg text-balance text-muted-foreground">
                   Enter your email below to create your account
                 </p>
               </div>
@@ -111,5 +111,5 @@ export function SignupForm({
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-  )
+  );
 }
