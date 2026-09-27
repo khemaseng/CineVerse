@@ -19,9 +19,12 @@ export function DataTable({
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
-            <tr className="border-b border-border bg-muted/50 text-xs font-semibold uppercase text-muted-foreground">
+            <tr className="border-b border-border bg-muted/50 text-base font-semibold uppercase text-muted-foreground">
               {columns.map((column) => (
-                <th key={column.id} className={`px-4 py-3 ${column.className || ""}`}>
+                <th
+                  key={column.id}
+                  className={`px-4 py-3 ${column.className || ""}`}
+                >
                   {column.header}
                 </th>
               ))}
@@ -30,21 +33,33 @@ export function DataTable({
           <tbody className="divide-y divide-border">
             {isLoading ? (
               <tr>
-                <td colSpan={columns.length} className="py-12 text-center text-muted-foreground">
+                <td
+                  colSpan={columns.length}
+                  className="py-12 text-center text-muted-foreground"
+                >
                   Loading movie catalog...
                 </td>
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="py-12 text-center text-muted-foreground">
+                <td
+                  colSpan={columns.length}
+                  className="py-12 text-center text-muted-foreground"
+                >
                   No movies found.
                 </td>
               </tr>
             ) : (
               data.map((movie, rowIndex) => (
-                <tr key={movie.id} className="transition-colors hover:bg-muted/30">
+                <tr
+                  key={movie.id}
+                  className="transition-colors hover:bg-muted/30"
+                >
                   {columns.map((column) => (
-                    <td key={column.id} className={`px-4 py-3 align-middle ${column.className || ""}`}>
+                    <td
+                      key={column.id}
+                      className={`px-4 py-3 align-middle ${column.className || ""}`}
+                    >
                       {column.cell(movie, rowIndex)}
                     </td>
                   ))}

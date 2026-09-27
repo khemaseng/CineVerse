@@ -17,7 +17,7 @@ export const columns: ColumnDef<Movie>[] = [
   {
     id: "id",
     header: "ID",
-    className: "w-16 font-mono text-xs text-gray-500",
+    className: "w-16 font-mono text-base text-gray-500",
     cell: (movie) => <span>#{movie.id.toString().slice(-4)}</span>,
   },
   {
@@ -44,24 +44,28 @@ export const columns: ColumnDef<Movie>[] = [
   {
     id: "release-date",
     header: "Release Date",
-    className: "w-28 whitespace-nowrap text-xs text-muted-foreground",
+    className: "w-28 whitespace-nowrap text-base text-muted-foreground",
     cell: (movie) => <span>{movie.release_date || "N/A"}</span>,
   },
   {
     id: "language",
     header: "Language",
-    className: "w-20 text-xs uppercase text-muted-foreground",
-    cell: (movie) => <span>{(movie.original_language || "en").toUpperCase()}</span>,
+    className: "w-20 text-base uppercase text-muted-foreground",
+    cell: (movie) => (
+      <span>{(movie.original_language || "en").toUpperCase()}</span>
+    ),
   },
   {
     id: "rating",
     header: "Rating",
     className: "w-28 whitespace-nowrap",
     cell: (movie) => (
-      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-500">
+      <span className="inline-flex items-center gap-1.5 text-base font-semibold text-amber-500">
         <Star size={13} className="fill-amber-500 text-amber-500" />
         {movie.vote_average ? movie.vote_average.toFixed(1) : "0.0"}
-        <span className="font-normal text-muted-foreground">({movie.vote_count ?? 0})</span>
+        <span className="font-normal text-muted-foreground">
+          ({movie.vote_count ?? 0})
+        </span>
       </span>
     ),
   },

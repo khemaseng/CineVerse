@@ -58,7 +58,7 @@ export default function AboutUs() {
       email: "mailto:example@gmail.com",
     },
     {
-      name: "HEANH CHANRAKSMEY",
+      name: "Heanh Chanraksmey",
       role: "FRONTEND",
       blurb: "Connects CineVerse with theaters and movie communities.",
       image: "/raksmey.png",
@@ -109,7 +109,7 @@ export default function AboutUs() {
       {/* Hero Section */}
       {/* Hero Section */}
       <section className="text-center px-6 pt-16 pb-12 max-w-4xl mx-auto">
-        <p className="text-amber-500 font-semibold tracking-wider text-xs md:text-sm uppercase mb-3">
+        <p className="text-amber-500 font-semibold tracking-wider text-base md:text-base uppercase mb-3">
           ABOUT CINEVERSE
         </p>
 
@@ -118,19 +118,19 @@ export default function AboutUs() {
           Confidence
         </h1>
 
-        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-8">
+        <p className="text-gray-600 dark:text-gray-400 text-base md:text-base max-w-2xl mx-auto mb-8">
           CineVerse delivers instant access to top releases, cult classics, and
           trending titles with secure, lightning-fast digital checkout.
         </p>
 
-        <button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors">
+        <button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-6 py-2.5 rounded-lg text-base transition-colors">
           Start Streaming Now
         </button>
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 text-center">
           <div className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm transition-colors">
-            <p className="text-xs text-amber-500 font-medium mb-1">
+            <p className="text-base text-amber-500 font-medium mb-1">
               Active Streamers
             </p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
@@ -139,14 +139,14 @@ export default function AboutUs() {
           </div>
 
           <div className="bg-white dark:bg-[#111C35] border border-amber-500 rounded-xl p-5 shadow-md">
-            <p className="text-xs text-amber-500 font-medium mb-1">
+            <p className="text-base text-amber-500 font-medium mb-1">
               Movies Streamed
             </p>
             <p className="text-xl font-bold text-amber-500">25,000+</p>
           </div>
 
           <div className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm transition-colors">
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mb-1">
+            <p className="text-base text-gray-500 dark:text-gray-400 font-medium mb-1">
               Payment Success Rate
             </p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
@@ -158,17 +158,17 @@ export default function AboutUs() {
 
       {/* Our Partners */}
       <section className="px-6 py-12 border-t border-gray-200 dark:border-gray-800/60 max-w-5xl mx-auto">
-        <p className="text-amber-500 font-semibold text-center text-xs tracking-wider uppercase mb-2">
+        <p className="text-amber-500 font-semibold text-center text-base tracking-wider uppercase mb-2">
           COLLABORATION
         </p>
-        <h2 className="text-2xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+        <h2 className="text-4xl font-bold mb-8 text-center text-gray-900 dark:text-white">
           Our Partners
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {partners.map((p) => (
             <div
               key={p}
-              className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 hover:border-amber-500/40 rounded-xl py-4 text-center text-gray-700 dark:text-gray-300 font-medium text-sm shadow-sm transition-all hover:text-amber-500"
+              className="bg-white dark:bg-[#111C35] border border-gray-200 dark:border-gray-800 hover:border-amber-500/40 rounded-xl py-4 text-center text-gray-700 dark:text-gray-300 font-medium text-base shadow-sm transition-all hover:text-amber-500"
             >
               {p}
             </div>
@@ -178,13 +178,13 @@ export default function AboutUs() {
 
       {/* Our Story */}
       <section className="px-6 py-12 border-t border-gray-200 dark:border-gray-800/60 max-w-3xl mx-auto text-center">
-        <p className="text-amber-500 font-semibold text-xs tracking-wider uppercase mb-2">
+        <p className="text-amber-500 font-semibold text-base tracking-wider uppercase mb-2">
           WHO WE ARE
         </p>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           Our Story
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm md:text-base">
+        <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base md:text-base">
           CineVerse started with a simple frustration: unused tickets going to
           waste while other fans missed sold-out shows. We built a marketplace
           where movie lovers can buy and sell tickets directly, safely, and
@@ -194,13 +194,13 @@ export default function AboutUs() {
 
       {/* Meet Our Team */}
       <section className="px-6 py-16 border-t border-gray-200 dark:border-gray-800/60 max-w-6xl mx-auto">
-        <p className="text-amber-500 font-semibold text-center text-xs tracking-wider uppercase mb-2">
+        <p className="text-amber-500 font-semibold text-center text-base tracking-wider uppercase mb-2">
           THE TEAM
         </p>
         <h2 className="text-3xl font-bold text-center mb-2 text-gray-900 dark:text-white">
           Meet Our Team
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 text-center mb-12 text-sm max-w-md mx-auto">
+        <p className="text-gray-600 dark:text-gray-400 text-center mb-12 text-base max-w-md mx-auto">
           The people building a fair, simple way to trade movie tickets.
         </p>
 
@@ -231,15 +231,15 @@ export default function AboutUs() {
                 )}
               </div>
 
-              <h3 className="text-base font-bold text-gray-900 dark:text-white text-center mb-1">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white text-center mb-1">
                 {m.name}
               </h3>
 
-              <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-semibold tracking-wider px-3 py-0.5 rounded-full uppercase mb-3">
+              <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[14px] font-semibold tracking-wider px-3 py-0.5 rounded-full uppercase mb-3">
                 {m.role}
               </span>
 
-              <p className="text-xs text-gray-600 dark:text-gray-400 text-center mb-5 line-clamp-2">
+              <p className="text-base text-gray-600 dark:text-gray-400 text-center mb-5 line-clamp-2">
                 {m.blurb}
               </p>
 
@@ -278,10 +278,10 @@ export default function AboutUs() {
 
       {/* Testimonials */}
       <section className="px-6 py-16 border-t border-gray-200 dark:border-gray-800/60 max-w-5xl mx-auto pb-24">
-        <p className="text-amber-500 font-semibold text-center text-xs tracking-wider uppercase mb-2">
+        <p className="text-amber-500 font-semibold text-center text-base tracking-wider uppercase mb-2">
           FEEDBACK
         </p>
-        <h2 className="text-2xl font-bold text-center mb-10 text-gray-900 dark:text-white">
+        <h2 className="text-4xl font-bold text-center mb-10 text-gray-900 dark:text-white">
           What Our Users Say
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
@@ -293,10 +293,10 @@ export default function AboutUs() {
               <span className="text-amber-500 text-3xl font-serif block mb-2">
                 “
               </span>
-              <p className="text-xs text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+              <p className="text-base text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
                 {t.quote}
               </p>
-              <p className="font-semibold text-sm text-gray-900 dark:text-white">
+              <p className="font-semibold text-base text-gray-900 dark:text-white">
                 {t.name}
               </p>
               <p className="text-[11px] text-gray-500 dark:text-gray-400">

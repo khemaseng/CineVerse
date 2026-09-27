@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Image from "next/image";
 import { Star } from "lucide-react";
@@ -25,9 +24,11 @@ export function MovieCardComponent({ movie }: { movie: Movie }) {
       <div className="absolute inset-0 bg-primary-gold/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       {/* Floating Top Rating Badge */}
-      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-primary-gold/30 bg-black/60 px-2.5 py-1 text-xs font-bold text-primary-gold backdrop-blur-md">
+      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-primary-gold/30 bg-black/60 px-2.5 py-1 text-base font-bold text-primary-gold backdrop-blur-md">
         <Star size={12} className="fill-primary-gold text-primary-gold" />
-        <span>{movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}</span>
+        <span>
+          {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+        </span>
       </div>
       <div className="p-3">
         <h3 className="truncate text-lg font-semibold text-foreground">

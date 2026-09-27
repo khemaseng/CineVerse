@@ -20,7 +20,7 @@ export default function UserProfilePage() {
       user: getCurrentUser(),
       avatarUrl: window.localStorage.getItem("cineverse-demo-avatar"),
     }),
-    () => "null",
+    () => JSON.stringify({ user: null, avatarUrl: null }),
   );
   const { user, avatarUrl: storedAvatar } = JSON.parse(sessionSnapshot) as {
     user: { name: string; email: string } | null;

@@ -71,7 +71,7 @@ export default function TrailerSection({ videos = [] }: TrailerSectionProps) {
                 {selectedVideo.name}
               </h3>
               <div className="mt-1 flex items-center gap-2 text-base text-zinc-400">
-                <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-semibold text-amber-400">
+                <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[14px] font-semibold text-amber-400">
                   {selectedVideo.type}
                 </span>
                 {selectedVideo.official ? (

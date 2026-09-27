@@ -22,7 +22,7 @@ export function MovieCastComponent({ cast }: { cast: CastMember[] }) {
             <p className="mt-2 truncate text-base font-semibold text-foreground">
               {member.name}
             </p>
-            <p className="truncate text-[10px] text-muted-foreground">
+            <p className="truncate text-[14px] text-muted-foreground">
               {member.character}
             </p>
           </div>

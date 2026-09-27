@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -71,7 +70,7 @@ export function CinematicSpotlightComponent({
                 priority
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary-gold backdrop-blur-md border border-primary-gold/30">
+              <div className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-0.5 text-[14px] font-black uppercase tracking-wider text-primary-gold backdrop-blur-md border border-primary-gold/30">
                 4K ULTRA HD
               </div>
             </Link>
@@ -85,10 +84,10 @@ export function CinematicSpotlightComponent({
           >
             {/* Spotlight Eyebrow Badge (Icon Removed) */}
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center rounded-full border border-primary-gold/40 bg-primary-gold/15 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-gold backdrop-blur-md">
+              <span className="inline-flex items-center rounded-full border border-primary-gold/40 bg-primary-gold/15 px-3.5 py-1 text-base font-bold uppercase tracking-wider text-primary-gold backdrop-blur-md">
                 {badgeText}
               </span>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-white/70">
+              <span className="inline-flex items-center gap-1 text-base font-semibold text-white/70">
                 <Film size={13} /> TMDB Verified
               </span>
             </div>
@@ -97,13 +96,20 @@ export function CinematicSpotlightComponent({
               {movie.title}
             </h2>
 
-            <div className="flex flex-wrap items-center gap-2.5 text-xs">
+            <div className="flex flex-wrap items-center gap-2.5 text-base">
               <div className="flex items-center gap-1.5 rounded-lg border border-primary-gold/30 bg-black/50 px-3 py-1.5 font-bold text-primary-gold backdrop-blur-md">
-                <Star size={14} className="fill-primary-gold text-primary-gold" />
-                <span>{movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"} / 10</span>
+                <Star
+                  size={14}
+                  className="fill-primary-gold text-primary-gold"
+                />
+                <span>
+                  {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"} /
+                  10
+                </span>
               </div>
               <span className="rounded-lg border border-white/10 bg-black/40 px-3 py-1.5 font-medium text-white/90 backdrop-blur-md">
-                Year: {movie.release_date ? movie.release_date.slice(0, 4) : "2026"}
+                Year:{" "}
+                {movie.release_date ? movie.release_date.slice(0, 4) : "2026"}
               </span>
               <span className="rounded-lg border border-white/10 bg-black/40 px-3 py-1.5 font-medium text-white/90 backdrop-blur-md">
                 Original Audio

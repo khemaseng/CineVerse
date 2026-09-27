@@ -82,7 +82,7 @@ export function MovieDetailComponent({ movie }: { movie: MovieDetails }) {
             {hasTrailer && (
               <a
                 href="#trailer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-navy-blue shadow-lg transition-colors hover:bg-amber-300"
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary-gold px-5 py-2.5 text-base font-bold uppercase tracking-wider text-navy-blue shadow-lg transition-colors hover:bg-amber-300"
               >
                 <Play size={14} className="fill-current" />
                 Watch Official Trailer
@@ -96,7 +96,10 @@ export function MovieDetailComponent({ movie }: { movie: MovieDetails }) {
             <MovieCastComponent cast={movie.credits.cast} />
           )}
           {!!movie.videos?.results?.length && (
-            <div id="trailer" className="flex w-full justify-center scroll-mt-24">
+            <div
+              id="trailer"
+              className="flex w-full justify-center scroll-mt-24"
+            >
               <div className="w-full max-w-4xl">
                 <MovieTrailerComponent videos={movie.videos.results} />
               </div>

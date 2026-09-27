@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -13,9 +12,7 @@ interface CoverFlowProps {
 }
 
 export function CoverFlowCarouselComponent({ movies = [] }: CoverFlowProps) {
-  const [activeIndex, setActiveIndex] = useState(
-    movies.length > 2 ? 2 : 0
-  );
+  const [activeIndex, setActiveIndex] = useState(movies.length > 2 ? 2 : 0);
 
   const total = movies.length;
 
@@ -49,13 +46,13 @@ export function CoverFlowCarouselComponent({ movies = [] }: CoverFlowProps) {
 
       {/* Matched Section Header */}
       <div className="mb-8 text-center">
-        <span className="text-xs font-bold uppercase tracking-widest text-primary-gold">
+        <span className="text-base font-bold uppercase tracking-widest text-primary-gold">
           Exclusive Showcase
         </span>
         <h2 className="mt-1 text-2xl font-black text-navy-blue sm:text-3xl dark:text-white">
           Coming Next to Theaters
         </h2>
-        <p className="mt-1 text-xs text-navy-blue/60 dark:text-white/60">
+        <p className="mt-1 text-base text-navy-blue/60 dark:text-white/60">
           Upcoming blockbusters arriving next to the big screen
         </p>
       </div>
@@ -106,8 +103,10 @@ export function CoverFlowCarouselComponent({ movies = [] }: CoverFlowProps) {
 
                 {/* Top Badge Strip */}
                 <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
-                  <span className="rounded-full border border-white/20 bg-black/60 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white backdrop-blur-md">
-                    {movie.release_date ? movie.release_date.slice(0, 4) : "2026"}
+                  <span className="rounded-full border border-white/20 bg-black/60 px-2.5 py-0.5 text-[14px] font-bold tracking-wider text-white backdrop-blur-md">
+                    {movie.release_date
+                      ? movie.release_date.slice(0, 4)
+                      : "2026"}
                   </span>
 
                   {isCenter && (
@@ -171,7 +170,7 @@ export function CoverFlowCarouselComponent({ movies = [] }: CoverFlowProps) {
               <p className="line-clamp-1 text-[11px] font-extrabold text-white max-w-[130px]">
                 {activeMovie.title}
               </p>
-              <p className="text-[10px] font-medium text-primary-gold">
+              <p className="text-[14px] font-medium text-primary-gold">
                 {activeMovie.release_date || "Coming Soon"}
               </p>
             </div>

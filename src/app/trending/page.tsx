@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTrendingMovies } from "@/lib/api/tmdb";
 import { TrendingListComponent } from "@/components/trending/TrendingListComponent";
 
@@ -34,7 +35,9 @@ export default async function TrendingPage() {
         </p>
       </div>
 
-      <TrendingListComponent initialMovies={initialMovies} />
+      <Suspense fallback={<div className="min-h-64" aria-label="Loading trending movies" />}>
+        <TrendingListComponent initialMovies={initialMovies} />
+      </Suspense>
     </main>
   );
 }
