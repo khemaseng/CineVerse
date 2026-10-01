@@ -16,18 +16,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!movie || !movie.id) {
       return {
         title: "Movie Not Found | CineVerse",
-        description: "The movie details you are looking for are unavailable.",
       };
     }
 
     const title = `${movie.title} ${movie.release_date ? `(${movie.release_date.slice(0, 4)})` : ""}`;
     const description =
       movie.overview ||
-      `Watch ${movie.title} on CineVerse. Explore official trailers, ratings, and reviews in HD.`;
+      `Watch ${movie.title} on CineVerse. Explore trailers, cast, and ratings.`;
 
-    const imagePath = movie.backdrop_path || movie.poster_path;
-    const imageUrl = imagePath
-      ? `https://image.tmdb.org/t/p/w1280${imagePath}`
+    // ជ្រើសរើស Backdrop (16:9) ឬ Poster
+    const poster = movie.backdrop_path || movie.poster_path;
+    const ogImage = poster
+      ? `https://image.tmdb.org/t/p/w1280${poster}`
       : "https://cine-verse-7tfx.vercel.app/side-of-form.png";
 
     return {
@@ -38,12 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         type: "video.movie",
         siteName: "CineVerse",
+        url: `https://cine-verse-7tfx.vercel.app/movies/${movieId}`,
         images: [
           {
-            url: imageUrl,
+            url: ogImage,
+            secureUrl: ogImage,
             width: 1280,
             height: 720,
             alt: movie.title,
+            type: "image/jpeg",
           },
         ],
       },
@@ -51,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         card: "summary_large_image",
         title: `${title} | CineVerse`,
         description,
-        images: [imageUrl],
+        images: [ogImage],
       },
     };
   } catch {
