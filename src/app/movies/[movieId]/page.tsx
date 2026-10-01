@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const title = `${movie.title} (${movie.release_date ? movie.release_date.slice(0, 4) : "Movie"})`;
     const description =
       movie.overview ||
-      `Watch ${movie.title} on CineVerse. HD Streaming, Official Trailers, and Reviews.`;
+      `Watch ${movie.title} on CineVerse. Explore trailers, cast, reviews, and storyline in HD.`;
 
-    // យក Backdrop កម្រិត 1280x720 ឬ Poster សម្រាប់ Telegram Card
+    // ជ្រើសរើស Backdrop (16:9) ជាអាទិភាព ឬយក Poster (2:3) បើគ្មាន Backdrop
     const imagePath = movie.backdrop_path || movie.poster_path;
     const imageUrl = imagePath
       ? `https://image.tmdb.org/t/p/w1280${imagePath}`
-      : "https://cine-verse-8i8.vercel.app/thumbnail.png";
+      : "https://cine-verse-7tfx.vercel.app/side-of-form.png";
 
     return {
       title: `${title} | CineVerse`,
@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         type: "video.movie",
         siteName: "CineVerse",
+        url: `https://cine-verse-7tfx.vercel.app/movies/${movie.id}`,
         images: [
           {
             url: imageUrl,
@@ -75,7 +76,7 @@ export default async function MovieDetailPage({ params }: Props) {
     }
 
     return (
-      <main className="min-h-screen bg-white dark:bg-[#041226] text-foreground transition-colors duration-200">
+      <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-white dark:bg-[#041226] text-foreground transition-colors duration-200">
         <MovieDetailComponent movie={movie} />
       </main>
     );
