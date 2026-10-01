@@ -22,13 +22,13 @@ const notoKhmer = Noto_Sans_Khmer({
   weight: ["400", "500", "700"],
 });
 
-// Viewport configuration for full mobile responsiveness
+// Viewport configuration សម្រាប់ Mobile & Tablet
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f6fa" },
     { media: "(prefers-color-scheme: dark)", color: "#041226" },
   ],
 };
@@ -111,10 +111,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoKhmer.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col font-sans bg-white dark:bg-[#041226] text-[#041226] dark:text-white transition-colors duration-200 overflow-x-hidden">
+      <body className="flex min-h-screen w-full max-w-full flex-col overflow-x-hidden bg-[#f4f6fa] text-[#082c59] dark:bg-[#041226] dark:text-white transition-colors duration-200">
         <ThemeProvider>
           <NavbarComponent />
-          <main className="flex-1 w-full">{children}</main>
+          {/* Main Container ធានាថាមិនឱ្យមាន element ណាមួយរុញហៀរផ្ទាំងសខាងស្តាំ */}
+          <main className="flex-1 w-full max-w-full overflow-x-hidden">
+            {children}
+          </main>
           <FooterComponent />
           <Toaster richColors position="top-right" />
         </ThemeProvider>

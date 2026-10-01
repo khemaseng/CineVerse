@@ -1,75 +1,62 @@
-<<<<<<< HEAD
-import Link from "next/link";
-import { Open_Sans } from "next/font/google";
-
-const googleSans = Open_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-export default function NotFound() {
-  return (
-    <main
-      className={`${googleSans.className} relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#070b14] px-6 text-center text-white`}
-    >
-=======
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Film, Home, ArrowLeft, Search } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "404 - Page Not Found",
+  title: "404 - Page Not Found | CineVerse",
   description:
-    "The page or reel you requested is unavailable or has been archived.",
-  openGraph: {
-    title: "404 - Page Not Found | CineVerse",
-    description:
-      "The page or reel you requested is unavailable or has been archived.",
-    images: ["/opengraph.png"],
-  },
+    "The page or movie you are looking for does not exist on CineVerse.",
 };
 
 export default function NotFound() {
   return (
-    <main className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#070b14] px-6 text-center text-white font-sans">
->>>>>>> 589a24d73879e2aaa7a4c910514de76929b0a8ef
-      {/* Subtle ambient spotlight glow behind */}
-      <div className="pointer-events-none absolute -top-32 h-96 w-96 rounded-full bg-amber-500/5 blur-3xl animate-pulse" />
+    <main className="relative flex min-h-[85vh] w-full items-center justify-center overflow-hidden bg-[#041226] px-4 py-16 text-white font-sans sm:px-6 lg:px-8">
+      {/* Background Cinematic Radial & Glow Highlights */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(243,168,18,0.08)_0%,_transparent_60%)]" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary-gold/10 blur-[120px]" />
 
-      {/* Main card */}
-      <div className="relative z-10 flex flex-col items-center animate-in fade-in zoom-in-95 duration-700 ease-out">
-        {/* Compact, refined status badge */}
-        <span className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-xs font-medium tracking-wide text-zinc-400 backdrop-blur-sm">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" />
-          Page Missing
-        </span>
-
-        {/* Scaled-down, elegant 404 header */}
-        <h1 className="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-6xl font-bold tracking-tight text-transparent transition-all sm:text-7xl">
-          404
+      <div className="relative z-10 mx-auto max-w-lg text-center">
+        {/* 404 Header with Gold Gradient */}
+        <h1 className="text-7xl font-black tracking-tight sm:text-8xl">
+          4
+          <span className="bg-gradient-to-r from-amber-300 via-primary-gold to-amber-500 bg-clip-text text-transparent">
+            0
+          </span>
+          4
         </h1>
 
-        {/* Minimal text */}
-        <div className="mt-4 max-w-sm space-y-1.5">
-          <h2 className="text-base font-semibold text-white/90">
-            Lost in the CineVerse
-          </h2>
-          <p className="text-xs leading-relaxed text-zinc-400">
-            The page or reel you requested is unavailable or has been archived.
-          </p>
-        </div>
+        {/* Subtitle & Description */}
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          Scene Not Found
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-gray-400 sm:text-base">
+          Sorry, the movie, reel, or page you were looking for has vanished from
+          the screen or was moved to another timeline.
+        </p>
 
-        {/* Polished interactive button */}
-        <div className="mt-8">
+        {/* Action Buttons with Light Yellow Accent */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/"
-            className="group relative inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-xs font-semibold tracking-wide text-white/90 backdrop-blur-md transition-all duration-300 hover:border-amber-400/40 hover:bg-amber-400/10 hover:text-amber-300 hover:-translate-y-0.5 active:translate-y-0"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary-gold px-6 text-sm font-bold text-navy-blue shadow-lg shadow-primary-gold/15 transition-all hover:bg-amber-400 active:scale-95 sm:w-auto"
           >
-            <span>Return to Home</span>
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-              &rarr;
-            </span>
+            <Home size={16} />
+            <span>Back to Home</span>
+          </Link>
+
+          <Link
+            href="/movies"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-amber-300/40 bg-black/40 px-6 text-sm font-semibold text-gray-200 backdrop-blur-md transition-all hover:border-amber-400 hover:bg-white/5 hover:text-white active:scale-95 sm:w-auto"
+          >
+            <Search size={16} className="text-primary-gold" />
+            <span>Explore Movies</span>
           </Link>
         </div>
+
+        {/* Quick Help Footer */}
+        <p className="mt-10 text-xs text-gray-500">
+          Error Code: 404_PAGE_NOT_FOUND • CineVerse Platform
+        </p>
       </div>
     </main>
   );
