@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import type { Movie } from "@/lib/api/types/movie";
 import type { ColumnDef } from "./columns";
 
-interface DataTableProps {
+export interface DataTableProps {
   columns: ColumnDef<Movie>[];
   data: Movie[];
   isLoading?: boolean;
@@ -14,11 +15,12 @@ export function DataTable({
   data = [],
   isLoading = false,
 }: DataTableProps) {
+  const router = useRouter();
+
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm shadow-gray-200/50 backdrop-blur-sm dark:border-white/10 dark:bg-[#061426]/70 dark:shadow-2xl dark:shadow-black/40">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
-          {/* Table Header */}
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-semibold text-gray-500 dark:border-white/10 dark:bg-white/[0.02] dark:text-gray-400">
               {columns.map((col, index) => (
@@ -32,7 +34,6 @@ export function DataTable({
             </tr>
           </thead>
 
-          {/* Table Body */}
           <tbody className="divide-y divide-gray-100 dark:divide-white/5">
             {isLoading ? (
               <tr>
@@ -40,7 +41,10 @@ export function DataTable({
                   colSpan={columns.length}
                   className="py-16 text-center text-sm text-gray-400 dark:text-gray-500"
                 >
-                  Loading movie catalog...
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="h-2 w-2 animate-ping rounded-full bg-amber-400" />
+                    <span>Loading movie catalog...</span>
+                  </div>
                 </td>
               </tr>
             ) : data.length === 0 ? (
@@ -56,7 +60,8 @@ export function DataTable({
               data.map((movie, rowIndex) => (
                 <tr
                   key={movie.id}
-                  className="transition-colors hover:bg-gray-50/70 dark:hover:bg-white/[0.03]"
+                  onClick={() => router.push(`/movies/${movie.id}`)}
+                  className="group cursor-pointer transition-colors hover:bg-amber-400/5 dark:hover:bg-amber-400/[0.04]"
                 >
                   {columns.map((col, colIndex) => (
                     <td

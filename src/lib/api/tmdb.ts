@@ -12,14 +12,18 @@ async function fetchTMDB<T>(
   endpoint: string,
   params: Record<string, string> = {},
 ): Promise<T> {
+  // ចាប់យក Key និងធ្វើការ trim() ដើម្បីកម្ចាត់ space ដែលនាំឱ្យកើត 401 Unauthorized
+  const apiKey = (
+    process.env.TMDB_API_KEY ||
+    process.env.NEXT_PUBLIC_TMDB_API_KEY ||
+    ""
+  ).trim();
+
   const url = new URL(`${TMDB_BASE_URL}${endpoint}`);
-  url.searchParams.append(
-    "api_key",
-    process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-  );
+  url.searchParams.append("api_key", apiKey);
 
   Object.entries(params).forEach(([key, val]) => {
-    if (val) url.searchParams.append(key, val);
+    if (val) url.searchParams.append(key, String(val).trim());
   });
 
   const res = await fetch(url.toString(), { next: { revalidate: 3600 } });

@@ -1,5 +1,4 @@
-
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Khmer } from "next/font/google";
 import "./globals.css";
 import { NavbarComponent } from "@/components/nav-footer/NavbarComponent";
@@ -7,7 +6,6 @@ import { FooterComponent } from "@/components/nav-footer/FooterComponent";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "sonner";
 
-// 1. Initialize all fonts with required subsets
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,25 +19,87 @@ const geistMono = Geist_Mono({
 const notoKhmer = Noto_Sans_Khmer({
   variable: "--font-noto-khmer",
   subsets: ["khmer"],
-  weight: ["400", "500", "700"], // Define weights needed for Khmer text
+  weight: ["400", "500", "700"],
 });
+
+// Viewport configuration for full mobile responsiveness
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#041226" },
+  ],
+};
+
+const getMetadataBase = (): URL => {
+  const envUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : null) ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+    "https://cine-verse-8i8.vercel.app";
+
+  try {
+    const formattedUrl = envUrl.startsWith("http")
+      ? envUrl
+      : `https://${envUrl}`;
+    return new URL(formattedUrl);
+  } catch {
+    return new URL("https://cine-verse-8i8.vercel.app");
+  }
+};
+
 export const metadata: Metadata = {
+  metadataBase: getMetadataBase(),
   title: {
     template: "%s | CineVerse",
-    default: "CineVerse",
+    default: "CineVerse - Modern Movie Discovery & Streaming",
   },
-  keywords: "movies, films, cinema, movie discovery, movie reviews, actors, genres",
   description:
-    "CineVerse is a modern movie discovery platform built for people who believe every film has a story worth experiencing. Explore movies from different genres, discover new favorites, and dive deeper into the world of cinema—all in one place.",
+    "CineVerse is a modern movie discovery platform built for film lovers. Explore curated genres, discover trending releases, and experience cinema with ease.",
+  keywords: [
+    "movies",
+    "films",
+    "cinema",
+    "movie discovery",
+    "streaming",
+    "genres",
+    "TMDB",
+  ],
+  authors: [{ name: "CineVerse Team" }],
+  creator: "CineVerse",
   openGraph: {
-    title: "CineVerse",
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "CineVerse",
+    title: "CineVerse - Stream & Discover Movies",
     description:
-      "CineVerse brings the world of cinema closer to you. Discover movies, explore stories, find new favorites, and experience the magic behind every film.",
-    images: ["/thumbnail.png"],
+      "Explore movies, discover new favorites, and experience cinema in high definition.",
+    images: [
+      {
+        url: "/opengraph-fix.png",
+        width: 1200,
+        height: 630,
+        alt: "CineVerse Movie Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CineVerse - Stream & Discover Movies",
+    description:
+      "Explore movies, discover new favorites, and experience cinema in high definition.",
+    images: ["/opengraph-fix.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
-// 2. Define proper TypeScript layout props
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -51,13 +111,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoKhmer.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+      <body className="flex min-h-screen flex-col font-sans bg-white dark:bg-[#041226] text-[#041226] dark:text-white transition-colors duration-200 overflow-x-hidden">
         <ThemeProvider>
           <NavbarComponent />
-
-          {/* The grow class ensures the main content fills the space, pushing the footer down */}
-          <main className="grow">{children}</main>
-
+          <main className="flex-1 w-full">{children}</main>
           <FooterComponent />
           <Toaster richColors position="top-right" />
         </ThemeProvider>

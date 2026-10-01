@@ -1,4 +1,4 @@
-import type { VideoResult } from "@/lib/api/movie";
+import type { VideoResult } from "@/lib/api/types/movie";
 
 export function MovieTrailerComponent({ videos }: { videos?: VideoResult[] }) {
   const trailer = videos?.find(
