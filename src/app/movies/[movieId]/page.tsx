@@ -20,12 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       };
     }
 
-    const title = `${movie.title} (${movie.release_date ? movie.release_date.slice(0, 4) : "Movie"})`;
+    const title = `${movie.title} ${movie.release_date ? `(${movie.release_date.slice(0, 4)})` : ""}`;
     const description =
       movie.overview ||
-      `Watch ${movie.title} on CineVerse. Explore trailers, cast, reviews, and storyline in HD.`;
+      `Watch ${movie.title} on CineVerse. Explore official trailers, ratings, and reviews in HD.`;
 
-    // ជ្រើសរើស Backdrop (16:9) ជាអាទិភាព ឬយក Poster (2:3) បើគ្មាន Backdrop
     const imagePath = movie.backdrop_path || movie.poster_path;
     const imageUrl = imagePath
       ? `https://image.tmdb.org/t/p/w1280${imagePath}`
@@ -39,14 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         type: "video.movie",
         siteName: "CineVerse",
-        url: `https://cine-verse-7tfx.vercel.app/movies/${movie.id}`,
         images: [
           {
             url: imageUrl,
             width: 1280,
             height: 720,
             alt: movie.title,
-            type: "image/jpeg",
           },
         ],
       },
