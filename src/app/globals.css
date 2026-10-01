@@ -1,9 +1,24 @@
-
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Reset Box-Sizing & Viewport Boundary */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-text-size-adjust: 100%;
+}
 
 /* Self-hosted Google Sans */
 @font-face {
@@ -43,48 +58,37 @@
 }
 
 @theme {
-  /* Dynamic Tailwind Utilities (Generates bg-*, text-*, border-*, fill-*) */
+  /* Dynamic Tailwind Utilities */
   --color-primary-gold: #f3a812;
   --color-primary-dark: #d88d00;
   --color-navy-blue: #082c59;
   --color-accent-blue: #0341e3;
   --color-bg-light: #f4f6fa;
-
-  /* Legacy red mapping mapped to gold so existing classes don't break */
   --color-primary-red: #f3a812;
 
-  /* Typography variables */
-  --text-h1: 96px;
-  --text-h2: 44px;
-  --text-h3: 32px;
-  --text-h4: 20px;
-  --text-btn: 24px;
-
-  --card-detail-title: 48px;
-  --card-title: 28px;
-  --card-description: 18px;
-  --text-btn-card: 16px;
-
+  /* Typography scale */
   --font-weight-regular: 400;
   --font-weight-bold: 700;
 }
+
 @layer base {
   :root {
     --primary-gold: #f3a812;
     --navy-blue: #082c59;
     --accent-blue: #0341e3;
     --bg-light: #f4f6fa;
-    --bg-dark-mode: #041226; /* Very dark navy blue background */
+    --bg-dark-mode: #041226;
 
-    /* Glassmorphism settings */
+    /* Border Theme */
+    --border: rgba(252, 211, 77, 0.4);
     --primary-color-5: rgba(8, 44, 89, 0.05);
-    --border-light-mode: rgba(8, 44, 89, 0.1);
+    --border-light-mode: rgba(252, 211, 77, 0.35);
     --primary-color-30: rgba(8, 44, 89, 0.4);
-    --border-dark-mode: rgba(243, 168, 18, 0.2);
+    --border-dark-mode: rgba(252, 211, 77, 0.25);
   }
 
   html {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   body {
@@ -100,10 +104,9 @@
       "Segoe UI",
       Roboto,
       sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.5;
     min-height: 100vh;
-    overflow-x: hidden;
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
@@ -140,7 +143,8 @@
 }
 
 .bg-cinema-radial {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       ellipse at 50% 50%,
       rgba(3, 65, 227, 0.25) 0%,
       #041226 100%
@@ -148,7 +152,7 @@
     #041226;
 }
 
-/* Hide scrollbars globally while maintaining scrollability */
+/* Hide scrollbars globally */
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -158,8 +162,17 @@
   display: none;
 }
 
-html,
-body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* ==========================================================
+   FORCE ULTRA-THIN LIGHT YELLOW BORDER ON AUTH CARDS (1px)
+   ========================================================== */
+main .rounded-3xl,
+main div[class*="rounded-3xl"],
+div[class*="max-w-6xl"] {
+  border: 1px solid rgba(252, 211, 77, 0.5) !important;
+  box-shadow: 0 10px 30px -5px rgba(252, 211, 77, 0.12) !important;
+}
+
+/* បិទ Border ជាន់គ្នានៅផ្នែក Form ខាងស្តាំ */
+main div[class*="rounded-3xl"] > div:last-child {
+  border: none !important;
 }

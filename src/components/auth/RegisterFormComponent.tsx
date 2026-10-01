@@ -48,7 +48,6 @@ export function RegisterFormComponent() {
     try {
       await registerWithEmail(data);
       toast.success("Account created successfully! Please sign in.");
-      // បញ្ជូនទៅទំព័រ Login ដោយស្វ័យប្រវត្តិ
       router.push("/auth/login");
     } catch (err) {
       toast.error(getAuthErrorMessage(err));
@@ -68,15 +67,15 @@ export function RegisterFormComponent() {
         <div>
           <label
             htmlFor="name"
-            className="text-base font-semibold text-foreground flex items-center gap-1"
+            className="text-sm font-semibold text-foreground flex items-center gap-1 mb-1.5"
           >
             <span>Full Name</span>
             <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <User
-              size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/70"
             />
             <input
               id="name"
@@ -84,15 +83,15 @@ export function RegisterFormComponent() {
               autoComplete="name"
               placeholder="John Doe"
               {...register("name")}
-              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-3.5 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+              className={`h-11 w-full rounded-xl border bg-white/70 dark:bg-white/[0.04] pl-10 pr-3.5 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.name
-                  ? "border-red-500 focus:border-red-500"
-                  : "border-slate-200 focus:border-slate-400"
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-400/20"
+                  : "border-amber-400/40 hover:border-amber-400/60 focus:border-amber-400 focus:ring-amber-300/30 dark:border-amber-400/30 dark:focus:border-amber-400"
               }`}
             />
           </div>
           {errors.name && (
-            <p className="text-base font-medium text-red-500">
+            <p className="mt-1 text-xs font-medium text-red-500">
               {errors.name.message}
             </p>
           )}
@@ -102,15 +101,15 @@ export function RegisterFormComponent() {
         <div>
           <label
             htmlFor="email"
-            className="text-base font-semibold text-foreground flex items-center gap-1"
+            className="text-sm font-semibold text-foreground flex items-center gap-1 mb-1.5"
           >
             <span>Email</span>
             <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Mail
-              size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/70"
             />
             <input
               id="email"
@@ -118,15 +117,15 @@ export function RegisterFormComponent() {
               autoComplete="email"
               placeholder="name@example.com"
               {...register("email")}
-              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-3.5 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+              className={`h-11 w-full rounded-xl border bg-white/70 dark:bg-white/[0.04] pl-10 pr-3.5 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.email
-                  ? "border-red-500 focus:border-red-500"
-                  : "border-slate-200 focus:border-slate-400"
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-400/20"
+                  : "border-amber-400/40 hover:border-amber-400/60 focus:border-amber-400 focus:ring-amber-300/30 dark:border-amber-400/30 dark:focus:border-amber-400"
               }`}
             />
           </div>
           {errors.email && (
-            <p className="text-base font-medium text-red-500">
+            <p className="mt-1 text-xs font-medium text-red-500">
               {errors.email.message}
             </p>
           )}
@@ -136,15 +135,15 @@ export function RegisterFormComponent() {
         <div>
           <label
             htmlFor="password"
-            className="text-base font-semibold text-foreground flex items-center gap-1"
+            className="text-sm font-semibold text-foreground flex items-center gap-1 mb-1.5"
           >
             <span>Password</span>
             <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Lock
-              size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/70"
             />
             <input
               id="password"
@@ -152,23 +151,23 @@ export function RegisterFormComponent() {
               autoComplete="new-password"
               placeholder="••••••••"
               {...register("password")}
-              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-11 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+              className={`h-11 w-full rounded-xl border bg-white/70 dark:bg-white/[0.04] pl-10 pr-11 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.password
-                  ? "border-red-500 focus:border-red-500"
-                  : "border-slate-200 focus:border-slate-400"
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-400/20"
+                  : "border-amber-400/40 hover:border-amber-400/60 focus:border-amber-400 focus:ring-amber-300/30 dark:border-amber-400/30 dark:focus:border-amber-400"
               }`}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 hover:text-amber-500 transition-colors"
             >
-              {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
           {errors.password && (
-            <p className="text-base font-medium text-red-500">
+            <p className="mt-1 text-xs font-medium text-red-500">
               {errors.password.message}
             </p>
           )}
@@ -178,15 +177,15 @@ export function RegisterFormComponent() {
         <div>
           <label
             htmlFor="confirmPassword"
-            className="text-base font-semibold text-foreground flex items-center gap-1"
+            className="text-sm font-semibold text-foreground flex items-center gap-1 mb-1.5"
           >
             <span>Confirm Password</span>
             <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Lock
-              size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/70"
             />
             <input
               id="confirmPassword"
@@ -194,10 +193,10 @@ export function RegisterFormComponent() {
               autoComplete="new-password"
               placeholder="••••••••"
               {...register("confirmPassword")}
-              className={`h-11 w-full rounded-xl border bg-navy-blue/5 dark:bg-white/5 pl-10 pr-11 text-lg font-medium text-foreground placeholder:text-muted-foreground/60 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
+              className={`h-11 w-full rounded-xl border bg-white/70 dark:bg-white/[0.04] pl-10 pr-11 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:bg-background focus:outline-none focus:ring-2 ${
                 errors.confirmPassword
-                  ? "border-red-500 focus:border-red-500"
-                  : "border-slate-200 focus:border-slate-400"
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-400/20"
+                  : "border-amber-400/40 hover:border-amber-400/60 focus:border-amber-400 focus:ring-amber-300/30 dark:border-amber-400/30 dark:focus:border-amber-400"
               }`}
             />
             <button
@@ -206,13 +205,13 @@ export function RegisterFormComponent() {
               aria-label={
                 showConfirmPassword ? "Hide password" : "Show password"
               }
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 hover:text-amber-500 transition-colors"
             >
-              {showConfirmPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+              {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-base font-medium text-red-500">
+            <p className="mt-1 text-xs font-medium text-red-500">
               {errors.confirmPassword.message}
             </p>
           )}
@@ -222,11 +221,11 @@ export function RegisterFormComponent() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-blue text-white font-bold shadow-md shadow-navy-blue/20 transition-all hover:bg-navy-blue/90 hover:shadow-lg active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 text-lg mt-3"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary-gold text-[#041226] font-bold shadow-md shadow-primary-gold/15 transition-all hover:bg-amber-400 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 text-sm mt-3"
         >
           {isSubmitting ? (
             <>
-              <Loader2 size={15} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin" />
               <span>Creating account...</span>
             </>
           ) : (
@@ -235,35 +234,35 @@ export function RegisterFormComponent() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-xs text-muted-foreground pt-1">
         Demo accounts are saved in this browser only.
       </p>
 
       {/* Switch to Login */}
-      <div className="text-center text-base text-muted-foreground pt-1">
+      <div className="text-center text-xs sm:text-sm text-muted-foreground pt-2">
         Already have an account?{" "}
         <Link
           href="/auth/login"
-          className="font-bold text-navy-blue hover:underline ml-1"
+          className="font-bold text-amber-500 hover:text-amber-600 dark:hover:text-amber-400 ml-1 transition-colors"
         >
           Sign In
         </Link>
       </div>
 
       {/* Footer Legal Links */}
-      <div className="flex items-center justify-center gap-4 pt-3 border-t border-border/60 text-[18px] text-muted-foreground">
-        <span className="inline-flex items-center gap-1 hover:text-foreground cursor-pointer">
+      <div className="flex items-center justify-center gap-4 pt-4 border-t border-amber-400/15 text-xs text-muted-foreground">
+        <span className="inline-flex items-center gap-1 hover:text-amber-500 cursor-pointer transition-colors">
           <FileText size={12} />
           Terms
         </span>
         <span>•</span>
-        <span className="inline-flex items-center gap-1 hover:text-slate-600 cursor-pointer">
-          <Shield size={11} />
+        <span className="inline-flex items-center gap-1 hover:text-amber-500 cursor-pointer transition-colors">
+          <Shield size={12} />
           Privacy
         </span>
         <span>•</span>
-        <span className="inline-flex items-center gap-1 hover:text-slate-600 cursor-pointer">
-          <HelpCircle size={11} />
+        <span className="inline-flex items-center gap-1 hover:text-amber-500 cursor-pointer transition-colors">
+          <HelpCircle size={12} />
           Help
         </span>
       </div>
