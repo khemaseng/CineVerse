@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Khmer } from "next/font/google";
 import "./globals.css";
 import { NavbarComponent } from "@/components/nav-footer/NavbarComponent";
@@ -21,6 +21,17 @@ const notoKhmer = Noto_Sans_Khmer({
   subsets: ["khmer"],
   weight: ["400", "500", "700"],
 });
+
+// Viewport configuration for full mobile responsiveness
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#041226" },
+  ],
+};
 
 const getMetadataBase = (): URL => {
   const envUrl =
@@ -100,7 +111,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoKhmer.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col font-sans bg-white dark:bg-[#041226] text-[#041226] dark:text-white transition-colors duration-200">
+      <body className="flex min-h-screen flex-col font-sans bg-white dark:bg-[#041226] text-[#041226] dark:text-white transition-colors duration-200 overflow-x-hidden">
         <ThemeProvider>
           <NavbarComponent />
           <main className="flex-1 w-full">{children}</main>
